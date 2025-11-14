@@ -1,0 +1,19 @@
+Ennen kuin aloitetaan kehitys:
+  - React ladattuna
+  - Node ympäristö ladattanu 
+  - Vite ladattuna 
+  - Selenium ladattauna (tarvitaan käyttöiittymän testeihin)
+  - Jest (yksikkö testeihin)
+
+Ehkä mukaan:
+  - Tailwind  
+
+Pohja softasta:
+  - Reactilla käyttöliittymä 
+  - Tyylit css / Tailwind 
+  - Backend JavaScriptillä
+  - Tiedot tallentuu JSON muotoon
+  - Yksikkö testit Jest:llä 
+  - Käyttöliittymä testit Seleniumilla
+
+  

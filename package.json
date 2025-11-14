@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.17",
+    "selenium-webdriver": "^4.38.0",
+    "tailwindcss": "^4.1.17"
+  },
+  "devDependencies": {
+    "jest": "^30.2.0"
+  }
+}
