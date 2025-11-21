@@ -1,9 +1,16 @@
 import { useState } from 'react'
 import './App.css'
 
+//Tätä vois periaattees vähä modaa ja sit käyttää kaikes mitä lähetetään bäkkärin 
+//Periaattees lisäis parametreiks metodin (get/post) ja sitten sisällön ja palautetaan response 
+//niin toimis missä vaan tilanteessa
 async function sendToBackEnd() {
   try {
+    //HUOM Lähettäkää AINA JSON muodossa asiat palvelimelle
+    //Ja kertokaa sitten kun ootte saanut päätettyä miten tuo pyynty hoituu
     let obj = {"nimi": "Palvelin"};
+    
+    //Lähetetään pyyntö 
     let response = await fetch("http://127.0.0.1:3000", {
       method: "POST",
       body: JSON.stringify(obj),
@@ -13,10 +20,13 @@ async function sendToBackEnd() {
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`)
       }
-      console.log(response)
+      
+      //Tulostetaan vain teksti (tällä hetkellä bäkkäri vastaa aina teksillä, mutta vaihtuu json myöhemmin)
+      //Voiaan myös periaa lähettää aina stringi takasin ja sit JSON.parse()
       let result = await response.text();
       console.log(result);    
-      //return result;    
+      //return result;
+      //Tää pois tyylii kommenteist sitku halutaa palauttaa
       
     } catch (error) {
       console.error(error);
