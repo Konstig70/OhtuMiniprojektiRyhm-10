@@ -1,35 +1,40 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+async function sendToBackEnd() {
+  try {
+    let obj = {"nimi": "Palvelin"};
+    let response = await fetch("http://127.0.0.1:3000", {
+      method: "POST",
+      body: JSON.stringify(obj),
+      headers: { "Content-Type": "application/json" }
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`)
+      }
+      console.log(response)
+      let result = await response.text();
+      console.log(result);    
+      //return result;    
+      
+    } catch (error) {
+      console.error(error);
+      //return "";
+    }
 
+}
+
+function App() {
+  //Muistakaa laittaa tonne sitten <Lomake /> kun se tiedosto on luotu
+  //Testi nappi on bäkkäriä varten tehty 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Testi</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1>Viitteiden latoja</h1>
+      <button type="radio" onClick={sendToBackEnd}>nappi, paina tästä</button>
     </>
   )
 }
+
 
 export default App
