@@ -8,10 +8,13 @@ async function sendToBackEnd() {
   try {
     //HUOM Lähettäkää AINA JSON muodossa asiat palvelimelle
     //Ja kertokaa sitten kun ootte saanut päätettyä miten tuo pyynty hoituu
-    let obj = {"nimi": "Palvelin"};
     
-    //Lähetetään pyyntö 
-    let response = await fetch("http://127.0.0.1:3000", {
+    // viitetyyppi: book, article, inproceedings
+    let obj = {"viitetyyppi": "book"};
+    
+    // Lähetetään pyyntö 
+    // Micke: poistetaan urlin loppuosa jossain vaiheessa    
+    let response = await fetch("http://127.0.0.1:3000/maarittelyt", {
       method: "POST",
       body: JSON.stringify(obj),
       headers: { "Content-Type": "application/json" }

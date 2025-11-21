@@ -1,0 +1,10 @@
+{
+    "book": {
+        "fields": [
+            "author",
+            "title",
+            "year",
+            "publisher"
+        ]
+    }
+}
