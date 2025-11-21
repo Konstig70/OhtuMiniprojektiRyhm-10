@@ -19,6 +19,30 @@ backend.post('/', (req, res) => {
   res.send(`Hello ${message.nimi} from backend!`)  
 })
 
+// listataan viitteiden tyypit JSON-muodossa
+backend.get('/viitetyypit', (req, res) => {        
+    
+    // luetaan viitetyyppien määrittelyt
+    fs.readFile('../backend/tiedostot/viitemaarittelyt.json', 'utf8', (err, data) => {
+        if (err) {
+            res.status(500).send('Error reading file');
+        } else {
+        
+            var jsonData = JSON.parse(data);            
+            var viitetyypit = Object.keys(jsonData);
+            
+            if (viitetyypit.length > 0) { 
+                res.json({"viitetyypit": viitetyypit});
+            }
+            else {
+                res.status(500).send('Viitetyyppejä ei löytynyt');
+            }
+            
+        }
+    });    
+})
+
+// haetaan halutun tyyppisen viitteen kentät JSON-muodossa
 backend.post('/maarittelyt', (req, res) => {    
 
     const viitetyyppi = req.body.viitetyyppi;
@@ -37,7 +61,7 @@ backend.post('/maarittelyt', (req, res) => {
                 res.json(jsonData[viitetyyppi]);                
             }
             else {
-                res.status(500).send('Viitetyyppiä ${viitetyyppi} ei löytynyt.');
+                res.status(500).send('Viitetyyppiä ${viitetyyppi} ei löytynyt');
             }            
         }
     });    

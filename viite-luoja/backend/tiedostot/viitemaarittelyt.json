@@ -1,10 +1,28 @@
 {
+    "article": {
+        "fields": [
+            "author",
+            "title",
+            "journal",
+            "year",
+            "volume",
+            "pages"
+        ]
+    },
     "book": {
         "fields": [
             "author",
             "title",
             "year",
             "publisher"
+        ]
+    },
+    "inproceedings": {
+        "fields": [
+            "author",
+            "title",
+            "year",
+            "booktitle"
         ]
     }
 }
