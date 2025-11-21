@@ -11,5 +11,5 @@ BibTeXissä kenttä voi olla "Kurt G{\"o}del" -> "Kurt Gödel", mutta projektin 
 
 **BibTeX-linkkejä**  
 [virallinen sivusto](https://www.ctan.org/pkg/bibtex)  
-(https://en.wikipedia.org/wiki/BibTeX)  
-(https://www.bibtex.com/)  
+[](https://en.wikipedia.org/wiki/BibTeX)  
+[](https://www.bibtex.com/)  
