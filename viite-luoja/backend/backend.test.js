@@ -11,9 +11,9 @@ jest.unstable_mockModule('fs/promises', () => ({
 }));
 
 //Importataan backend
-const { default: haeKaikkiTyypit } = await import('./backend.js');
+const { haeKaikkiTyypit } = await import('./apu.js');
 
-//Testit 
+//Testit haeKaikkiTyypit funktiolle. 
 describe('haeKaikkiTyypit', () => {
   //Ennen jokaista tuhotaan kaikki mock oliot 
   afterEach(() => {
