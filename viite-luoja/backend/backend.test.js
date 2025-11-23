@@ -28,7 +28,7 @@ describe('haeKaikkiTyypit', () => {
     
     //Kutsutaan haeKaikkiTyypit funktiota
     const result = await haeKaikkiTyypit();
-    
+    //
     //Tulos sama kuin mockdata ja mockReadFile kutsuttu oikealla parametrilla
     expect(result).toEqual(JSON.parse(mockData));
     expect(mockReadFile).toHaveBeenCalledWith('tiedostot/viitemaarittelyt.json', 'utf8');
