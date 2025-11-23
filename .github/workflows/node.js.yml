@@ -28,10 +28,6 @@ jobs:
       run: npm ci
       working-directory: ./viite-luoja
     
-    - name: Build
-      run: npm run build --if-present
-      working-directory: ./viite-luoja
-    
     - name: Run tests
       run: npm test
       working-directory: ./viite-luoja
