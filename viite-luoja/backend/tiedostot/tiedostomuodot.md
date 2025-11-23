@@ -1,8 +1,14 @@
+**HUOM!**  
+_Citekey_ on viitteen yksilöivä tunnus.  
+Se saa sisältää kirjaimia ja numeroita, mutta erikoismerkeistä vain seuraavat: "-", "_", ja ":"  
+Citekeyn pituutta ei ole rajoitettu.  
+Citekey voidaan muodostaa automaattisesti ensimmäisen tekijän sukunimestä ja julkaisuvuodesta (kunhan se on ainutlaatuinen).  
+    
 **book.json**  
 Laitoin vuosiluvun myös lainausmerkkeihin, käsitellään kaikki merkkijonoina (BibTexin kannata ei merkitystä).    
 type: viitteen tyyppi, esim. book  
-citekey: yksilöllinen avain johon viitataan latexissa  
-
+citekey: vitteen yksilöivä avain johon viitataan latexissa  
+  
 **book.bib**  
 Edellinen BibTeX-muodossa  
 

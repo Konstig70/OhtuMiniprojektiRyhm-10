@@ -3,26 +3,135 @@
         "fields": [
             "author",
             "title",
-            "journal",
             "year",
+            "journal",
             "volume",
-            "pages"
+            "number",
+            "pages",
+            "doi"
         ]
     },
     "book": {
         "fields": [
             "author",
             "title",
+            "publisher",
             "year",
-            "publisher"
+            "doi"
+        ]
+    },
+    "booklet": {
+        "fields": [
+            "author",
+            "title",
+            "howpublished",
+            "month",
+            "year",
+            "doi"
+        ]
+    },
+    "conference": {
+        "fields": [
+            "author",
+            "title",
+            "booktitle",
+            "year",
+            "volume",
+            "number",
+            "pages",
+            "doi"
+        ]
+    },
+    "inbook": {
+        "fields": [
+            "author",
+            "title",
+            "pages",
+            "doi"
+        ]
+    },
+    "incollection": {
+        "fields": [
+            "author",
+            "title",
+            "booktitle",
+            "publisher",
+            "year",
+            "doi"
         ]
     },
     "inproceedings": {
         "fields": [
             "author",
             "title",
+            "booktitle",
             "year",
-            "booktitle"
+            "volume",
+            "number",
+            "pages",
+            "doi"
+        ]
+    },
+    "manual": {
+        "fields": [
+            "author",
+            "title",
+            "doi"
+        ]
+    },
+    "mastersthesis": {
+        "fields": [
+            "author",
+            "title",
+            "school",
+            "year",
+            "doi"
+        ]
+    },
+    "misc": {
+        "fields": [
+            "author",
+            "title",
+            "howpublished",
+            "year",
+            "doi"
+        ]
+    },
+    "phdthesis": {
+        "fields": [
+            "author",
+            "title",
+            "school",
+            "year",
+            "doi"
+        ]
+    },
+    "proceedings": {
+        "fields": [
+            "title",
+            "year",
+            "volume",
+            "organization",
+            "publisher",
+            "doi"
+        ]
+    },
+    "techreport": {
+        "fields": [
+            "author",
+            "title",
+            "institution",
+            "year",
+            "type",
+            "doi"
+        ]
+    },
+    "unpublished": {
+        "fields": [
+            "author",
+            "title",
+            "year",
+            "doi"
         ]
     }
 }
