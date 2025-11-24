@@ -44,9 +44,7 @@ function App() {
   //Testi nappi on bäkkäriä varten tehty 
   return (
     <>
-      <h1>Viitteiden latoja</h1>
       <Lomake />
-      <button type="radio" onClick={sendToBackEnd}>nappi, paina tästä</button>
     </>
   )
 }
