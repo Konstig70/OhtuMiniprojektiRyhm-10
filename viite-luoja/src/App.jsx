@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import Lomake from './Lomake.jsx'
 
 //Tätä vois periaattees vähä modaa ja sit käyttää kaikes mitä lähetetään bäkkärin 
 //Periaattees lisäis parametreiks metodin (get/post) ja sitten sisällön ja palautetaan response 
@@ -44,6 +45,7 @@ function App() {
   return (
     <>
       <h1>Viitteiden latoja</h1>
+      <Lomake />
       <button type="radio" onClick={sendToBackEnd}>nappi, paina tästä</button>
     </>
   )
