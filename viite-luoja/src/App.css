@@ -5,6 +5,37 @@
   text-align: center;
 }
 
+legend {
+  font-size: x-large;
+}
+
+select {
+  padding: 5px;
+  cursor: pointer;
+  background-color: solid #222;
+}
+
+select:hover {
+  border-color: lightblue;
+}
+
 .inputContainer {
   text-align: left;
+  margin-bottom: 12px;
+}
+
+.inputContainer label {
+  text-transform: capitalize;
+}
+
+.inputContainer label > input {
+  width: 250px;
+  padding: 5px;
+  border: 1px solid #888;
+  background-color: #222;
+  color: white;
+}
+
+.inputContainer label > input:hover {
+  border-color: lightblue;
 }
