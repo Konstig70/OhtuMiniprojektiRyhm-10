@@ -1,6 +1,29 @@
 import { useState } from 'react'
 import sendToBackEnd from './App.jsx'
 
+function InputKentat({nimiLista}) {
+  if (!nimiLista) {
+    return
+  }
+
+  const InputFields = () => {
+    return (
+      nimiLista.map(name =>
+        <div className='inputContainer' key={name}>
+          <label>{name + ": "}
+          <input type="text" className='hakuKentta' />
+          </label>
+        </div>
+    )
+    )}
+
+  return (
+    <div>
+      <InputFields />
+    </div>
+  )
+}
+
 function Lomake() {
   return (
     <>
