@@ -22,16 +22,28 @@ describe('haeKaikkiTyypit', () => {
 
 
   test('palautetaan JSON muodossa luettu data', async () => {
-    const mockData = JSON.stringify({ book: { name: 'Book' } });
-    //Nyt siis laitetaan mocReadFile palauttamaan aina mockdata
-    mockReadFile.mockResolvedValue(mockData);
+      
+    const mockData = {
+            "book":  {"jotain": "muuta"},
+            "article" : {"jotain": "muuta"},
+            "inproceedings" : {"jotain": "muuta"}
+    };
+    
+    const expectedResult = {
+        "viitetyypit": ["book", "article", "inproceedings"]
+    };
+    
+    //Nyt siis laitetaan mocReadFile palauttamaan aina mockdata    
+    mockReadFile.mockResolvedValue(JSON.stringify(mockData));
     
     //Kutsutaan haeKaikkiTyypit funktiota
     const result = await haeKaikkiTyypit();
-    //
-    //Tulos sama kuin mockdata ja mockReadFile kutsuttu oikealla parametrilla
-    expect(result).toEqual(JSON.parse(mockData));
-    expect(mockReadFile).toHaveBeenCalledWith('tiedostot/viitemaarittelyt.json', 'utf8');
+    const tiedostopolkuViitemaarittelyt = new URL('./tiedostot/viitemaarittelyt.json', import.meta.url);
+    
+    //Tulos sama kuin mockdata ja mockReadFile kutsuttu oikealla parametrilla    
+    expect(result).toEqual(expectedResult);
+    expect(mockReadFile).toHaveBeenCalledWith(tiedostopolkuViitemaarittelyt, 'utf8');
+    
   });
 
   test('palautetaan null kun tiedostossa ei ole viitetyyppejä', async () => {
