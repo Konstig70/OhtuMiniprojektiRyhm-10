@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import Lomake from './Lomake.jsx'
+import Devnapit from './Devnapit.jsx' // lisätty palvelimen testaamista varten pohja/Micke 25.11.
 
 //Tätä vois periaattees vähä modaa ja sit käyttää kaikes mitä lähetetään bäkkärin 
 //Periaattees lisäis parametreiks metodin (get/post) ja sitten sisällön ja palautetaan response 
@@ -45,6 +46,7 @@ function App() {
   return (
     <>
       <Lomake />
+      <Devnapit />
     </>
   )
 }
