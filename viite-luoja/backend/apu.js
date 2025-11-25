@@ -3,8 +3,7 @@ import fs from 'fs/promises';
 export async function haeTiettyTyyppi(viitetyyppi) {
     try {
       const data = await fs.readFile('./tiedostot/viitemaarittelyt.json', 'utf8');
-      var jsonData = JSON.parse(data);
-      console.log(jsonData[viitetyyppi]);  
+      var jsonData = JSON.parse(data);      
       // jos haluttu viitetyyppi löytyi, palautetaan se
       if (jsonData.hasOwnProperty(viitetyyppi)) {             
          return jsonData[viitetyyppi];                
