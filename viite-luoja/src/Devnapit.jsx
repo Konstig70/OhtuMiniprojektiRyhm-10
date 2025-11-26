@@ -1,6 +1,10 @@
 // pohja erilaisille palvelimen testauksille,
 // jotta ei tarvitse koskea App.jsx-tiedostoon
 // 25.11.2025 Micke
+
+// NÄYTETÄÄNKÖ NAPIT VAI EI
+const naytaDevNapit = false;
+
   
 async function HaeViitetyypit() {
 
@@ -38,9 +42,13 @@ function tulostaTyypit(viitetyypit) {
 
 export function Devnapit() {
       
-  return (
-    <button onClick={HaeViitetyypit}>DEV: tulosta kaikki viitetyypit konsoliin</button>
-  )
+  if (naytaDevNapit) {   
+      
+    return (
+        <button onClick={HaeViitetyypit}>DEV: tulosta kaikki viitetyypit konsoliin</button>
+    )
+  
+  }
   
 }
 
