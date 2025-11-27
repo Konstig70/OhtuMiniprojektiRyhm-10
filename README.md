@@ -9,10 +9,9 @@ Definition of done: Toiminta on dokumentoitu, toteuttaa kuvauksen sekä on integ
 ### Asennus omalle koneelle  
 * Asenna Node: https://nodejs.org/  
 * Kloonaa repositorio: git clone https://github.com/Konstig70/OhtuMiniprojektiRyhm-10.git  
-* Siirry hakemistoon OhtuMiniprojektiRyhm-10\viite-luoja  
-* Asenna riippuvuudet: npm install  
+* Asenna riippuvuudet: npm install OhtuMiniprojektiRyhm-10\viite-luoja 
   
 ### Ohjelman ajaminen (vaatii kaksi eri komentoriviprosessia)  
-* Käynnistä backend: node backend\backend.js  
-* Käynnistä käyttöliittymä: npm run dev  
+* Käynnistä backend: node OhtuMiniprojektiRyhm-10\viite-luoja\backend\backend.js  
+* Käynnistä käyttöliittymä: npm run --prefix OhtuMiniprojektiRyhm-10\viite-luoja\ dev  
 * Anna selaimelle osoite: http://localhost:5173/  
