@@ -9,6 +9,10 @@ legend {
   font-size: x-large;
 }
 
+body {
+  background-color: #222;
+}
+
 select {
   padding: 5px;
   cursor: pointer;
