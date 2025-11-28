@@ -5,7 +5,7 @@
 [Backlog](https://docs.google.com/spreadsheets/d/1RtC81BpHEXICsb7RXLum4VLvrsglGhjhfL8DirmWFJc/edit?usp=sharing)  
   
 ### Sovelluksen verkkosivu  
-[Sovellus] (https://ohtuminiprojektiryhm-10.onrender.com/)
+[Sovellus](https://ohtuminiprojektiryhm-10.onrender.com/)
 
 ### Asennus omalle koneelle  
 * Asenna Node: https://nodejs.org/  
