@@ -6,10 +6,12 @@ import Devnapit from './Devnapit.jsx' // lisätty palvelimen testaamista varten 
 //Konsta 28.11: Hakee inputtien tiedot ja muodostaa niistä bibtex muotoisen viitteen
 //Tätä funktioo voi myös jatkaa ja lisätä sen kentälle lisäämisen myös tähän
 function lisaaViite() {
+  //Haetaan inputit
   let inputit = document.getElementsByClassName("hakuKentta");
-  //Haetaan arvot
+  //Haetaan inputeista arvot ja laitetaan taulukkoon
   const arvot = Array.from(inputit).map((i) => i.value);
   console.log(arvot);
+  //Sitten vaan kutsukaa bibtex muotoon muuttamis funkkarii tolla arvot muuttujal 
 }
 
 function App() {
