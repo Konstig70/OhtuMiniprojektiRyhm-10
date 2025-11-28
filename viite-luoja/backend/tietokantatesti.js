@@ -7,6 +7,7 @@ import fs from 'fs';
 export function testaaTietokanta() {
 
     const tiedostopolkuTietokanta = new URL('./tietokanta.db', import.meta.url);
+    console.log(tiedostopolkuTietokanta);
     const db = new DatabaseSync(tiedostopolkuTietokanta);
     //const database = new DatabaseSync(':memory:');
     
