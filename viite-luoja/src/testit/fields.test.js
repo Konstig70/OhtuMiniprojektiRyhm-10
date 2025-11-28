@@ -20,7 +20,7 @@ describe('getFields', () => {
       const expectedResult = null;
       const result = await getFields("");
       expect(result).toEqual(expectedResult);
-      expect(fetch).toHaveBeenCalledWith("http://127.0.0.1:3000/maarittelyt", {
+      expect(fetch).toHaveBeenCalledWith("https://ohtuminiprojektiryhm-10-backend.onrender.com/maarittelyt", {
         method: "POST",
         body: JSON.stringify({"viitetyyppi": ""}), 
         headers: { "Content-Type": "application/json" }
@@ -42,7 +42,7 @@ describe('getFields', () => {
     }));
     const result = await getFields("book");
     expect(result).toEqual(expectedResult);
-    expect(fetch).toHaveBeenCalledWith("http://127.0.0.1:3000/maarittelyt", {
+    expect(fetch).toHaveBeenCalledWith("https://ohtuminiprojektiryhm-10-backend.onrender.com/maarittelyt", {
       method: "POST",
       body: JSON.stringify({"viitetyyppi": "book"}), 
       headers: { "Content-Type": "application/json" }

@@ -3,6 +3,14 @@ import './App.css'
 import Lomake from './Lomake.jsx'
 import Devnapit from './Devnapit.jsx' // lisätty palvelimen testaamista varten pohja/Micke 25.11.
 
+//Konsta 28.11: Hakee inputtien tiedot ja muodostaa niistä bibtex muotoisen viitteen
+//Tätä funktioo voi myös jatkaa ja lisätä sen kentälle lisäämisen myös tähän
+function lisaaViite() {
+  let inputit = document.getElementsByClassName("hakuKentta");
+  //Haetaan arvot
+  const arvot = Array.from(inputit).map((i) => i.value);
+  console.log(arvot);
+}
 
 function App() {
   //Muistakaa laittaa tonne sitten <Lomake /> kun se tiedosto on luotu
@@ -11,7 +19,7 @@ function App() {
     <>
       <Lomake />
       <Devnapit />
-      <button>Lisää viite</button>
+      <button onClick={lisaaViite}>Lisää viite</button>
     </>
   )
 }
