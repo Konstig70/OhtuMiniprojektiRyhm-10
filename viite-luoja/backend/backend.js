@@ -53,8 +53,6 @@ backend.post('/maarittelyt', async (req, res) => {
 
 //Loggaus, ei tarvii muuten tästä välittää
 backend.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Backend listening on port ${port}`)
 })
 
-//Exportit testejä varten
-export default haeKaikkiTyypit;
