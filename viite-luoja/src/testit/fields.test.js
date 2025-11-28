@@ -6,7 +6,7 @@ global.fetch = jest.fn(() =>
   })
 );
 
-const {getFields} = await import('./fields.js');
+const {getFields} = await import('../funkkarit/fields.js');
 
 
 describe('getFields', () => {

@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import sendToBackEnd from './App.jsx'
+//Konsta 28.11 geFields nyt siirretty omaan tiedostoon ja importti sille
+import { getFields } from './funkkarit/fields'
 
 function InputKentat({nimiLista}) {
   // Poistutaan, jos kenttien nimiä ei annettu
@@ -25,33 +26,6 @@ function InputKentat({nimiLista}) {
   )
 }
 
-// Muokattu sendToBackEnd-funktio. Ilmeisesti oli tarkoitus muokata kyseistä funktiota ja kaikki backend kutsut
-// lähettää sen kautta, mutta en viitsinyt itsekseni alkaa muokkaamaan ettei mene rikki.
-// Kun sendToBackEnd on muokattu lopulliseen muotoon, tän voi kai poistaa
-async function getFields(viitetyyppi, setNameList) {
-  try {
-
-    let obj = {"viitetyyppi": viitetyyppi};
-    
-    let response = await fetch("http://127.0.0.1:3000/maarittelyt", {
-      method: "POST",
-      body: JSON.stringify(obj),
-      headers: { "Content-Type": "application/json" }
-      });
-      
-      if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`)
-      }
-      
-      // Otetaan vastauksena saadut kentät ja asetetaan ne listaan
-      let result = await response.json();
-      setNameList(result["fields"])
-      
-    } catch (error) {
-      console.error(error);
-      return null
-    }
-}
 
 function Lomake() {
   // Lista kenttien nimistä. Oletuksena valittuna viitetyypin article kentät
