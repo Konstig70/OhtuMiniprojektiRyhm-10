@@ -5,8 +5,8 @@
 [Backlog](https://docs.google.com/spreadsheets/d/1RtC81BpHEXICsb7RXLum4VLvrsglGhjhfL8DirmWFJc/edit?usp=sharing)  
   
 ### Sovelluksen verkkosivu  
-(ei vielä hostattu netissä)  
-  
+[Sovellus] (https://ohtuminiprojektiryhm-10.onrender.com/)
+
 ### Asennus omalle koneelle  
 * Asenna Node: https://nodejs.org/  
 * Kloonaa repositorio: git clone https://github.com/Konstig70/OhtuMiniprojektiRyhm-10.git  
