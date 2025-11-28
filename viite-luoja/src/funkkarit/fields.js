@@ -5,7 +5,7 @@
 export async function getFields(viitetyyppi, setNameList = null) {
   try {
     let obj = {"viitetyyppi": viitetyyppi};
-    let response = await fetch("http://127.0.0.1:3000/maarittelyt", {
+    let response = await fetch("https://ohtuminiprojektiryhm-10-backend.onrender.com/maarittelyt", {
       method: "POST",
       body: JSON.stringify(obj),
       headers: { "Content-Type": "application/json" }
