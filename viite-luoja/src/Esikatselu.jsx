@@ -41,7 +41,7 @@ function Esikatselu({ viitteet }) {
           <span>{"}"}<br/></span>
         </p>
         <p className="esikatseluViite">
-          <span>{"@inproceedings{CBH91,"}<br/></span>
+          <span>{"@article{CBH91,"}<br/></span>
           <span className="indent">{"    author = {Allan Collins and John Seely Brown and Ann Holum},"}<br/></span>
           <span className="indent">{"    title = {Cognitive apprenticeship: making thinking visible},"}<br/></span>
           <span className="indent">{"    journal = {American Educator},"}<br/></span>
@@ -51,7 +51,7 @@ function Esikatselu({ viitteet }) {
           <span>{"}"}<br/></span>
         </p>
         <p className="esikatseluViite">
-          <span>{"@inproceedings{Martin09,"}<br/></span>
+          <span>{"@book{Martin09,"}<br/></span>
           <span className="indent">{"    author = {Martin, Robert},"}<br/></span>
           <span className="indent">{"    title = {Clean Code: A Handbook of Agile Software Craftsmanship},"}<br/></span>
           <span className="indent">{"    year = {2008},"}<br/></span>
