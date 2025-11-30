@@ -1,5 +1,16 @@
 import { useState } from "react";
 
+// Kopioitu suoraan stack overflowsta
+function copyTextToClipboard(text) {
+  if (!navigator.clipboard) {
+    return;
+  }
+  navigator.clipboard.writeText(text).then(function() {
+    console.log('Async: Copying to clipboard was successful!');
+  }, function(err) {
+    console.error('Async: Could not copy text: ', err);
+  });
+}
 
 // Ottaa viitteet taulukossa ja luo esikatselukentän
 // Tässä vaiheessa ei ota mitään taulukkoa, vaan käytetään valmiita arvoja
@@ -20,7 +31,7 @@ function Esikatselu({ viitteet }) {
   // Väliaikainen ratkaisu ihan vain mallin vuoksi
   const Kentat = () => {
     return (
-      <ul>
+      <ul id="esikatseluLista">
         <p className="esikatseluViite">
           <span>{"@inproceedings{VPL11,"}<br/></span>
           <span className="indent">{"    author = {Vihavainen, Arto and Paksula, Matti and Luukkainen, Matti},"}<br/></span>
@@ -51,13 +62,21 @@ function Esikatselu({ viitteet }) {
     )
   }
 
+  const kopioiViitteet = () => {
+    // Otetaan kaikki esikatseltavat viitteet, korvataan <br>:t rivivaihdoilla, lisätään rivivaihto jokaisen
+    // viitteen jälkeen ja poistetaan html tagit
+    let teksti = document.getElementById("esikatseluLista").innerHTML.replaceAll(/<br>|<\/p>/g, '\n').replaceAll(/<[^<]*>/g, '')
+    console.log(teksti) // debug
+    copyTextToClipboard(teksti)
+  }
+
   return (
     <div>
       <legend>Esikatselu</legend>
       <div className="esikatselu">
         <Kentat />
       </div>
-      <button className="kopioi"><img src="/src/assets/copy-icon.svg" alt="Kopioi leikepöydälle"/></button>
+      <button className="kopioi" onClick={kopioiViitteet}><img src="./src/assets/copy-icon.svg" alt="Kopioi leikepöydälle"/></button>
     </div>
   )
 }
