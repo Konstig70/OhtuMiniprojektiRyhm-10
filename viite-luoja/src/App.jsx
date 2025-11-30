@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import Lomake from './Lomake.jsx'
 import Devnapit from './Devnapit.jsx' // lisätty palvelimen testaamista varten pohja/Micke 25.11.
+import Esikatselu from './Esikatselu.jsx';
 
 //Konsta 28.11: Hakee inputtien tiedot ja muodostaa niistä bibtex muotoisen viitteen
 //Tätä funktioo voi myös jatkaa ja lisätä sen kentälle lisäämisen myös tähän
@@ -19,12 +20,16 @@ function App() {
   //Testi nappi on bäkkäriä varten tehty 
   return (
     <>
-      <Lomake />
-      <Devnapit />
-      <button onClick={lisaaViite}>Lisää viite</button>
+    <div className='appContainer'>
+      <div>
+        <Lomake />
+        <button onClick={lisaaViite}>Lisää viite</button>
+      </div>
+      <Esikatselu viitteet={null} />{/*Viedään taulukko viitteistä, kunhan siltä osin valmista*/}
+    </div>
+    <Devnapit />
     </>
   )
 }
-
 
 export default App

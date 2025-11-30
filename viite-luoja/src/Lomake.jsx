@@ -42,7 +42,6 @@ function Lomake() {
 
   return (
     <>
-      <h1>Viitteiden latoja</h1>
       <form>
         <legend>Valitse viitetyyppi</legend>
         <label>Viitetyypi:
