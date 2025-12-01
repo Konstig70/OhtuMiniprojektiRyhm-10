@@ -4,6 +4,13 @@ import Lomake from './Lomake.jsx'
 import Devnapit from './Devnapit.jsx' // lisätty palvelimen testaamista varten pohja/Micke 25.11.
 import Esikatselu from './Esikatselu.jsx';
 
+
+// *************************************
+// VÄLIKAIKAINEN: ladataan esimerkkidata tiedostosta esikatselua varten/1.12.2025 Micke
+import esimerkkidata from './esimerkkidata.json'
+// *************************************
+
+
 //Konsta 28.11: Hakee inputtien tiedot ja muodostaa niistä bibtex muotoisen viitteen
 //Tätä funktioo voi myös jatkaa ja lisätä sen kentälle lisäämisen myös tähän
 function lisaaViite() {
@@ -25,7 +32,7 @@ function App() {
         <Lomake />
         <button onClick={lisaaViite}>Lisää viite</button>
       </div>
-      <Esikatselu viitteet={null} />{/*Viedään taulukko viitteistä, kunhan siltä osin valmista*/}
+      <Esikatselu viitteet={esimerkkidata} />{/*Viedään taulukko viitteistä, kunhan siltä osin valmista*/}
     </div>
     <Devnapit />
     </>
