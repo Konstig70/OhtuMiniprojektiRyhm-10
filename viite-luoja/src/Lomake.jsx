@@ -14,7 +14,7 @@ function InputKentat({nimiLista}) {
       nimiLista.map(name =>
         <div  className='inputContainer' key={name}>
           <label>{name + ": "}
-            <input type="text" className='hakuKentta' />
+            <input type="text" className='hakuKentta' name={name}/>
           </label>
         </div>
     )

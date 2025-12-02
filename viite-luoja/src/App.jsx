@@ -13,26 +13,52 @@ import esimerkkidata from './esimerkkidata.json'
 
 //Konsta 28.11: Hakee inputtien tiedot ja muodostaa niistä bibtex muotoisen viitteen
 //Tätä funktioo voi myös jatkaa ja lisätä sen kentälle lisäämisen myös tähän
-function lisaaViite() {
+function lisaaViite(setViitteet) {
   //Haetaan inputit
   let inputit = document.getElementsByClassName("hakuKentta");
   //Haetaan inputeista arvot ja laitetaan taulukkoon
-  const arvot = Array.from(inputit).map((i) => i.value);
-  console.log(arvot);
+  //const arvot = Array.from(inputit).map((i) => i.value);
+  //console.log(arvot);
+
+  //Jimi 2.12: Muutin tätä jonkin verran esikatseluun lisäystä varten
+  //sanokaa jos on huono
+  let uusiViite = {};
+
+  for (let input of inputit) {
+    uusiViite[input.name] = input.value;
+  }
+
+  //haetaan viitteen tyyppi
+  let select = document.querySelector("select");
+  let type = select.value.toLowerCase().replace(/\s/g, "");
+
+  uusiViite.type = type;
+
+  //väliaikainen citekey generaatio ennen oikeata
+  uusiViite.citekey = "testi" + Date.now();
+
+  //lisätään uusi viite
+  setViitteet(prev => [...prev, uusiViite]);
+  
   //Sitten vaan kutsukaa bibtex muotoon muuttamis funkkarii tolla arvot muuttujal 
 }
 
 function App() {
   //Muistakaa laittaa tonne sitten <Lomake /> kun se tiedosto on luotu
   //Testi nappi on bäkkäriä varten tehty 
+
+  //tila viitteille
+  //lisätyt viitteet json-muodossa
+  const [viitteet, setViitteet] = useState([]);
+
   return (
     <>
     <div className='appContainer'>
       <div>
         <Lomake />
-        <button onClick={lisaaViite}>Lisää viite</button>
+        <button onClick={() => lisaaViite(setViitteet)}>Lisää viite</button>
       </div>
-      <Esikatselu viitteet={esimerkkidata} />{/*Viedään taulukko viitteistä, kunhan siltä osin valmista*/}
+      <Esikatselu viitteet={viitteet} />{/*Viedään taulukko viitteistä, kunhan siltä osin valmista*/}
     </div>
     <Devnapit />
     </>
