@@ -18,6 +18,9 @@ function copyTextToClipboard(text) {
 // Tässä vaiheessa ei ota mitään taulukkoa, vaan käytetään valmiita arvoja
 function Esikatselu({ viitteet }) {
   
+  // Poistuu, jos ei ole viitteitä. Eli ei näytetä tyhjää esikatselua
+  if (!viitteet || viitteet.length == 0) return;
+
   const Kentat = () => {
     return( 
         <ul id="esikatseluLista">
@@ -36,7 +39,7 @@ function Esikatselu({ viitteet }) {
 
   return (
     <div>
-      <legend>Esikatselu</legend>
+      <legend id='esikatseluLegend'>Esikatselu</legend>
       <div className="esikatselu">
         <Kentat />
       </div>
