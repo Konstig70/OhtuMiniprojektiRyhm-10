@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { JsonToBibtex } from './funkkarit/jsonToBibtex.jsx';
 
 // Muokattu 1.12.2025/Micke, lisätty BibTeX-datan luonti JsonToBibtex-funktiolla
@@ -22,7 +21,7 @@ function Esikatselu({ viitteet }) {
   const Kentat = () => {
     return( 
         <ul id="esikatseluLista">
-        {viitteet.map(item => <JsonToBibtex jsonObject={item}/>)}
+        {viitteet.map(item => <JsonToBibtex key={item["citekey"]} jsonObject={item}/>)}
         </ul>
     );
   }    
