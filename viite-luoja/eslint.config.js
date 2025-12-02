@@ -4,7 +4,7 @@ import pluginReact from "eslint-plugin-react";
 import jestPlugin from "eslint-plugin-jest";
 import { defineConfig, globalIgnores } from "eslint/config";
 export default defineConfig([
-  { files: ["**/*.{js,mjs,cjs,jsx}"], plugins: { js, jest: jestPlugin }, extends: ["js/recommended"], languageOptions: { globals: {...globals.browser, ...globals.jest} } },
+  { files: ["**/*.{js,mjs,cjs,jsx}"], plugins: { js, jest: jestPlugin }, extends: ["js/recommended"], languageOptions: { globals: {...globals.browser, ...globals.jest, ...globals.node} } },
   pluginReact.configs.flat.recommended, jestPlugin.configs["flat/recommended"], {
     rules: {
       "react/prop-types": "off",
