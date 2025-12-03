@@ -1,6 +1,6 @@
 // Muodostetaan JSON-muotoisesta viitteestä BibTeX-muotoiset React-elementit
 // 1.12.2025/Micke
-// 3.12.2025/Micke lisätty 'key'-tieto jokaiselle riville joka muodostetaan .map-funktiolla
+// 3.12.2025/Micke lisätty 'key'-tieto jokaiselle riville joka muodostetaan .map-funktiolla: <span key={item.id} className="indent">
 
 /*
 BibTeX
@@ -47,11 +47,11 @@ export function JsonToBibtex({ jsonObject }) {
   }
   
   // tarkistetaan ensin että citekey ja tyyppi löytyy
-  if (jsonObject.hasOwnProperty('citekey')) {
+  if (Object.prototype.hasOwnProperty.call(jsonObject, 'citekey')) {
     citekey = jsonObject['citekey'];
   }
   
-  if (jsonObject.hasOwnProperty('type')) {
+  if (Object.prototype.hasOwnProperty.call(jsonObject, 'type')) {
     type = jsonObject['type'];
   }
   
