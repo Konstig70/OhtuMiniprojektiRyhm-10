@@ -1,5 +1,6 @@
 // Muodostetaan JSON-muotoisesta viitteestä BibTeX-muotoiset React-elementit
 // 1.12.2025/Micke
+// 3.12.2025/Micke lisätty 'key'-tieto jokaiselle riville joka muodostetaan .map-funktiolla
 
 /*
 BibTeX
@@ -44,30 +45,16 @@ export function JsonToBibtex({ jsonObject }) {
     console.log(`Annettu parametrin arvo on virheellinen, haluttiin objekti JSON-muodossa.`);
     return null;
   }
-
-  for (const key in jsonObject) {
-
-    let value = jsonObject[key];
-
-    switch (key.toLowerCase()) {
-
-      case 'citekey':
-        citekey = value;
-        break;
-
-      case 'type':
-        type = value;
-        break;
-
-      default:
-        if (isValidField(key, value)) {
-          lines.push( `    ${key.toLowerCase()} = {${String(value)}},` );
-        }
-
-    }
-
+  
+  // tarkistetaan ensin että citekey ja tyyppi löytyy
+  if (jsonObject.hasOwnProperty('citekey')) {
+    citekey = jsonObject['citekey'];
   }
-
+  
+  if (jsonObject.hasOwnProperty('type')) {
+    type = jsonObject['type'];
+  }
+  
   if (!isValidCitekey(citekey)) {
     console.log(`Citekey puuttuu tai on virheellinen: ${citekey}`);
     return null
@@ -77,6 +64,31 @@ export function JsonToBibtex({ jsonObject }) {
     console.log(`Type puuttuu tai on virheellinen: ${type}`);
     return null
   }
+  
+  // käsitellään muut kentät
+  for (const key in jsonObject) {
+
+    let value = jsonObject[key];
+
+    switch (key.toLowerCase()) {
+
+      case 'citekey':        
+        break;
+
+      case 'type':        
+        break;
+
+      default:
+        if (isValidField(key, value)) {
+          lines.push({
+            "id": `${citekey}-${key}`, 
+            "data": `    ${key.toLowerCase()} = {${String(value)}},` 
+            });            
+        }
+
+    }
+
+  }  
 
   if (lines.length == 0) {
     console.log(`Viitteessä ${citekey} ei ollut yhtään kenttää.`);
@@ -86,7 +98,7 @@ export function JsonToBibtex({ jsonObject }) {
   return (
   <p className="esikatseluViite">
     <span>{`@${type}{${citekey},`}<br/></span>
-    {lines.map(item => <span className="indent">{item}<br/></span>)}
+    {lines.map(item => <span key={item.id} className="indent">{item.data}<br/></span>)}
     <span>{'}'}<br/></span>
   </p>
   );
