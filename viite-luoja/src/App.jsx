@@ -5,10 +5,6 @@ import Devnapit from './Devnapit.jsx' // lisätty palvelimen testaamista varten 
 import Esikatselu from './Esikatselu.jsx';
 
 
-// *************************************
-// VÄLIKAIKAINEN: ladataan esimerkkidata tiedostosta esikatselua varten/1.12.2025 Micke
-import esimerkkidata from './esimerkkidata.json'
-// *************************************
 
 
 //Konsta 28.11: Hakee inputtien tiedot ja muodostaa niistä bibtex muotoisen viitteen

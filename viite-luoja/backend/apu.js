@@ -9,7 +9,7 @@ export async function haeTiettyTyyppi(viitetyyppi) {
       const data = await fs.readFile(tiedostopolkuViitemaarittelyt, 'utf8');
       var jsonData = JSON.parse(data);      
       // jos haluttu viitetyyppi löytyi, palautetaan se
-      if (jsonData.hasOwnProperty(viitetyyppi)) {             
+      if (Object.prototype.hasOwnProperty.call(jsonData, viitetyyppi)) {             
          return jsonData[viitetyyppi];                
       }
       else {

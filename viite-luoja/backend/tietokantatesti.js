@@ -1,6 +1,6 @@
-import sqlite from 'node:sqlite';
+//import sqlite from 'node:sqlite';
 import { DatabaseSync } from 'node:sqlite';
-import fs from 'fs';
+//import fs from 'fs';
 
 // TÄMÄ ON VAIN TIETOKANNAN LUONNIN TESTAUSTA VARTEN
 
