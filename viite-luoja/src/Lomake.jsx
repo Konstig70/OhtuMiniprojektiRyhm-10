@@ -45,7 +45,7 @@ function Lomake() {
       <form>
         <legend>Valitse viitetyyppi</legend>
         <label>Viitetyypi:
-          <select onChange={handleChange}>
+          <select id='tyyppiValinta' onChange={handleChange}>
             <option>Article</option>
             <option>Book</option>
             <option>Booklet</option>
