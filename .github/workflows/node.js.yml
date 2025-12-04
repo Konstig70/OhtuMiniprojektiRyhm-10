@@ -31,3 +31,11 @@ jobs:
     - name: Run tests
       run: npm test
       working-directory: ./viite-luoja
+    
+    - name: Run E2E tests  
+      run: npx playwright test
+      working-directory: ./viite-luoja
+      
+    - name: Lint
+      run: npx eslint src/ backend/
+      working-directory: ./viite-luoja
