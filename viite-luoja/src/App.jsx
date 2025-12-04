@@ -39,6 +39,13 @@ function lisaaViite(setViitteet) {
   //Sitten vaan kutsukaa bibtex muotoon muuttamis funkkarii tolla arvot muuttujal 
 }
 
+// Poistaa viitteen citekeyn perusteella
+function poistaViite(viitteet, setViitteet, poistettava) {
+  console.log("poistetaan", poistettava["type"], poistettava["citekey"]); // debug
+  let kopio = viitteet.filter(item => item["citekey"] != poistettava["citekey"]);
+  setViitteet(kopio);
+}
+
 function App() {
   //Muistakaa laittaa tonne sitten <Lomake /> kun se tiedosto on luotu
   //Testi nappi on bäkkäriä varten tehty 
@@ -55,7 +62,7 @@ function App() {
         <button onClick={() => lisaaViite(setViitteet)} id='viitteenLisays'>Lisää viite</button>
       </div>
       <Esikatselu viitteet={viitteet} />{/*Viedään taulukko viitteistä, kunhan siltä osin valmista*/}
-      <Listaus viitteet={viitteet} />
+      <Listaus viitteet={viitteet} poistaViite={(poistettava) => poistaViite(viitteet, setViitteet, poistettava)}/>
     </div>
     <Devnapit />
     </>
