@@ -29,7 +29,7 @@ function InputKentat({nimiLista}) {
 
 function Lomake() {
   // Lista kenttien nimistä. Oletuksena valittuna viitetyypin article kentät
-  const [nameList, setNameList] = useState( [ "author", "title", "year", "journal", "volume", "number", "pages", "doi" ] )
+  const [nameList, setNameList] = useState()
 
   // Tekee pyynnön aina bäckendiin, kun valitsee eri viitetyypin, mikä on ehkä huono
   const handleChange = (e) => {
@@ -46,6 +46,7 @@ function Lomake() {
         <legend>Valitse viitetyyppi</legend>
         <label>Viitetyypi:
           <select id='tyyppiValinta' onChange={handleChange}>
+            <option disabled selected hidden>Valitse tyyppi</option>
             <option>Article</option>
             <option>Book</option>
             <option>Booklet</option>
