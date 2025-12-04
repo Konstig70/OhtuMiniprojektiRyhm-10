@@ -3,7 +3,7 @@ import './App.css'
 import Lomake from './Lomake.jsx'
 import Devnapit from './Devnapit.jsx' // lisätty palvelimen testaamista varten pohja/Micke 25.11.
 import Esikatselu from './Esikatselu.jsx';
-
+import Listaus from './Listaus.jsx';
 
 
 
@@ -54,6 +54,7 @@ function App() {
         <Lomake />
         <button onClick={() => lisaaViite(setViitteet)} id='viitteenLisays'>Lisää viite</button>
       </div>
+      <Listaus viitteet={viitteet} />
       <Esikatselu viitteet={viitteet} />{/*Viedään taulukko viitteistä, kunhan siltä osin valmista*/}
     </div>
     <Devnapit />
