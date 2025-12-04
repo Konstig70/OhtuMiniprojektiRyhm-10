@@ -61,6 +61,10 @@ select:hover {
   display: flex;
 }
 
+.kopioi {
+  margin-left: 50px;
+}
+
 .kopioi img {
   display: block;
   height: 20px;  
