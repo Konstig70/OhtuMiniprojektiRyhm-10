@@ -1,32 +1,7 @@
 // Muodostetaan JSON-muotoisesta viitteestä BibTeX-muotoiset React-elementit
-// 1.12.2025/Micke
-// 3.12.2025/Micke lisätty 'key'-tieto jokaiselle riville joka muodostetaan .map-funktiolla: <span key={item.id} className="indent">
+// 4.12.2025/Micke siirretty bibtext-muotoisen datan muodostus omaan tiedostoon jsonToBibtexApu.js
 
-/*
-BibTeX
-the values of field can either be enclosed in { } or " "
-the field names are case insensitive: each variant is valid
-plain numbers do not need to be encloded in { } or " "
-
-JSON:
-{
-    "type": "book",
-    "citekey": "Martin09",
-    "author": "Martin, Robert",
-    "title": "Clean Code: A Handbook of Agile Software Craftsmanship",
-    "year": "2008",
-    "publisher": "Prentice Hall"
-}
-
-BibTeX:
-@book{Martin09,
-    author = {Martin, Robert},
-    title = {Clean Code: A Handbook of Agile Software Craftsmanship},
-    year = {2008},
-    publisher = {Prentice Hall},
-}
-*/
-
+import { jsonToBibtexMuodostaja } from './jsonToBibtexApu.js';
 
 // Luodaan yhdestä json-muotoisesta viitteestä React-elementit
 // Jos viitteen tyyppi puuttuu tai se on tuntematon, palautetaan arvo null.
@@ -36,65 +11,16 @@ BibTeX:
 // Null-arvoiset kentät ohitetaan.
 // Virhetilanteessa palautetaan arvo null.
 export function JsonToBibtex({ jsonObject }) { 
-
-  let lines = [];
-  let type = null;
-  let citekey = null;
-
-  if (jsonObject === null || typeof jsonObject != 'object' || Array.isArray(jsonObject)) {
-    console.log(`Annettu parametrin arvo on virheellinen, haluttiin objekti JSON-muodossa.`);
-    return null;
-  }
+    
+  let bibtexData = jsonToBibtexMuodostaja(jsonObject);  
   
-  // tarkistetaan ensin että citekey ja tyyppi löytyy
-  if (Object.prototype.hasOwnProperty.call(jsonObject, 'citekey')) {
-    citekey = jsonObject['citekey'];
-  }
+  //{ "type": "", "citekey": "", "lines": [{"id": "", "data": ""}] }
+  if (bibtexData === undefined || bibtexData === null) return null;
   
-  if (Object.prototype.hasOwnProperty.call(jsonObject, 'type')) {
-    type = jsonObject['type'];
-  }
-  
-  if (!isValidCitekey(citekey)) {
-    console.log(`Citekey puuttuu tai on virheellinen: ${citekey}`);
-    return null
-  }
-
-  if (!isValidType(type)) {
-    console.log(`Type puuttuu tai on virheellinen: ${type}`);
-    return null
-  }
-  
-  // käsitellään muut kentät
-  for (const key in jsonObject) {
-
-    let value = jsonObject[key];
-
-    switch (key.toLowerCase()) {
-
-      case 'citekey':        
-        break;
-
-      case 'type':        
-        break;
-
-      default:
-        if (isValidField(key, value)) {
-          lines.push({
-            "id": `${citekey}-${key}`, 
-            "data": `    ${key.toLowerCase()} = {${String(value)}},` 
-            });            
-        }
-
-    }
-
-  }  
-
-  if (lines.length == 0) {
-    console.log(`Viitteessä ${citekey} ei ollut yhtään kenttää.`);
-    return null
-  }
- 
+  let type = bibtexData.type;
+  let citekey = bibtexData.citekey;
+  let lines = bibtexData.lines;
+   
   return (
   <p className="esikatseluViite">
     <span>{`@${type}{${citekey},`}<br/></span>
@@ -105,23 +31,3 @@ export function JsonToBibtex({ jsonObject }) {
 
 }
 
-
-function isValidType(typename) {
-
-  const validTypes = ["article", "book", "booklet", "conference", "inbook", "incollection", "inproceedings", "manual", "mastersthesis", "misc", "phdthesis", "proceedings", "techreport", "unpublished"];
-  return validTypes.includes(typename);
-
-}
-
-
-function isValidField(fieldname, value) {
-
-  const validFields = ["address", "annote", "author", "booktitle", "chapter", "edition", "editor", "howpublished", "institution", "journal", "month", "note", "number", "organization", "pages", "publisher", "school", "series", "title", "type", "volume", "year", "doi", "issn", "isbn", "url"];
-  return validFields.includes(fieldname.toLowerCase()) && value != null;
-
-}
-
-
-function isValidCitekey(citekey) {
-  return citekey !== null && String(citekey).length > 0;
-}
