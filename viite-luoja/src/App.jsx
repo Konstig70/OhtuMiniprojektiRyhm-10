@@ -52,7 +52,7 @@ function App() {
     <div className='appContainer'>
       <div>
         <Lomake />
-        <button onClick={() => lisaaViite(setViitteet)}>Lisää viite</button>
+        <button onClick={() => lisaaViite(setViitteet)} id='viitteenLisays'>Lisää viite</button>
       </div>
       <Esikatselu viitteet={viitteet} />{/*Viedään taulukko viitteistä, kunhan siltä osin valmista*/}
     </div>
