@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+//import { jest } from '@jest/globals';
 import { jsonToBibtexMuodostaja } from '../funkkarit/jsonToBibtexApu.js';
 
 describe('jsonToBibtexMuodostaja', () => {
