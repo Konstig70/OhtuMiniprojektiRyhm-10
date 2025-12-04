@@ -54,8 +54,8 @@ function App() {
         <Lomake />
         <button onClick={() => lisaaViite(setViitteet)} id='viitteenLisays'>Lisää viite</button>
       </div>
-      <Listaus viitteet={viitteet} />
       <Esikatselu viitteet={viitteet} />{/*Viedään taulukko viitteistä, kunhan siltä osin valmista*/}
+      <Listaus viitteet={viitteet} />
     </div>
     <Devnapit />
     </>
