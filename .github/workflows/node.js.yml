@@ -27,7 +27,11 @@ jobs:
     - name: Install dependencies
       run: npm ci
       working-directory: ./viite-luoja
-    
+
+    - name: Install Playwright Chromium
+      run: npx playwright install chromium
+      working-directory: ./viite-luoja
+  
     - name: Run tests
       run: npm test
       working-directory: ./viite-luoja
