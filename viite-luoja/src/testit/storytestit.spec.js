@@ -4,7 +4,7 @@ import { test, expect } from '@playwright/test';
 //Story: "Käyttäjänä voin tallentaa nappia painamalla muodostuneen viite tiedoston BibTex-muodossa"
 test('Käyttäjänä voin tallentaa nappia painamalla muodostuneen viite tiedoston BibTex-muodossa', async ({ page }) => {
   //Mennään sivulle 
-  await page.goto('http://localhost:5173/');
+  await page.goto('https://ohtuminiprojektiryhm-10.onrender.com/');
   
   //Valitaan book tyyppinen viite ja odotetaan päivitys
   await page.selectOption('#tyyppiValinta', {label: 'Book'});
