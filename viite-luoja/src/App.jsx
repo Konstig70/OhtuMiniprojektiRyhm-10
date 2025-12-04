@@ -4,7 +4,7 @@ import Lomake from './Lomake.jsx'
 import Devnapit from './Devnapit.jsx' // lisätty palvelimen testaamista varten pohja/Micke 25.11.
 import Esikatselu from './Esikatselu.jsx';
 import Listaus from './Listaus.jsx';
-
+import {poistaViite} from './funkkarit/poisto.js';
 
 
 //Konsta 28.11: Hakee inputtien tiedot ja muodostaa niistä bibtex muotoisen viitteen
@@ -39,12 +39,6 @@ function lisaaViite(setViitteet) {
   //Sitten vaan kutsukaa bibtex muotoon muuttamis funkkarii tolla arvot muuttujal 
 }
 
-// Poistaa viitteen citekeyn perusteella
-function poistaViite(viitteet, setViitteet, poistettava) {
-  console.log("poistetaan", poistettava["type"], poistettava["citekey"]); // debug
-  let kopio = viitteet.filter(item => item["citekey"] != poistettava["citekey"]);
-  setViitteet(kopio);
-}
 
 function App() {
   //Muistakaa laittaa tonne sitten <Lomake /> kun se tiedosto on luotu
