@@ -1,6 +1,6 @@
 // pohja erilaisille palvelimen testauksille,
 // jotta ei tarvitse koskea App.jsx-tiedostoon
-// 25.11.2025 Micke
+// 5.12.2025 Micke
 
 // NÄYTETÄÄNKÖ NAPIT VAI EI
 const naytaDevNapit = false;
@@ -8,9 +8,18 @@ const naytaDevNapit = false;
 // ladataan viitteiden määrittelyt tiedostosta
 import viitedata from './viitemaarittelyt_v2.json'
 
-// tulostetaan viitteen yhden kentän tiedot konsoliin
-console.log('esimerkkikenttä:\n' + viitedata['book'].fields.map(item => `${item.fieldname}, ${item.required}, ${item.fieldtype}\n`).join(""));
-console.log(`${viitedata['book'].fields[2].fieldname} required is false: ${viitedata['book'].fields[2].required == false}`);
+if (naytaDevNapit) { 
+
+  // kaikki viitetyypit
+  console.log(`viitetyypit: ${Object.keys(viitedata)}`);
+
+  // tulostetaan yhden viitetyypin tiedot konsoliin
+  console.log('esimerkkiviite: book\n' + viitedata['book'].fields.map(item => `${item.fieldname}, ${item.required}, ${item.fieldtype}\n`).join(""));
+
+  // testataan vielä boolean arvo
+  console.log(`${viitedata['book'].fields[2].fieldname} required is false: ${viitedata['book'].fields[2].required == false}`);
+  
+}
  
 
 
