@@ -1,0 +1,136 @@
+{
+    "article": {
+        "fields": [
+            {"fieldname": "author", "required": true, "fieldtype": "string"},
+            {"fieldname": "title", "required": true, "fieldtype": "string"},
+            {"fieldname": "year", "required": false, "fieldtype": "integer"},
+            {"fieldname": "journal", "required": false, "fieldtype": "string"},
+            {"fieldname": "volume", "required": false, "fieldtype": "string"},
+            {"fieldname": "number", "required": false, "fieldtype": "string"},
+            {"fieldname": "pages", "required": false, "fieldtype": "string"},
+            {"fieldname": "doi", "required": false, "fieldtype": "string"}
+        ]
+    },
+    "book": {
+        "fields": [
+            {"fieldname": "author", "required": true, "fieldtype": "string"},
+            {"fieldname": "title", "required": true, "fieldtype": "string"},
+            {"fieldname": "publisher", "required": false, "fieldtype": "string"},
+            {"fieldname": "year", "required": false, "fieldtype": "integer"},
+            {"fieldname": "doi", "required": false, "fieldtype": "string"}
+        ]
+    },
+    "booklet": {
+        "fields": [
+            {"fieldname": "author", "required": true, "fieldtype": "string"},
+            {"fieldname": "title", "required": true, "fieldtype": "string"},
+            {"fieldname": "howpublished", "required": false, "fieldtype": "string"},
+            {"fieldname": "month", "required": false, "fieldtype": "string"},
+            {"fieldname": "year", "required": false, "fieldtype": "integer"},
+            {"fieldname": "doi", "required": false, "fieldtype": "string"}
+        ]
+    },
+    "conference": {
+        "fields": [
+            {"fieldname": "author", "required": true, "fieldtype": "string"},
+            {"fieldname": "title", "required": true, "fieldtype": "string"},
+            {"fieldname": "booktitle", "required": false, "fieldtype": "string"},
+            {"fieldname": "year", "required": false, "fieldtype": "integer"},
+            {"fieldname": "volume", "required": false, "fieldtype": "string"},
+            {"fieldname": "number", "required": false, "fieldtype": "string"},
+            {"fieldname": "pages", "required": false, "fieldtype": "string"},
+            {"fieldname": "doi", "required": false, "fieldtype": "string"}
+        ]
+    },
+    "inbook": {
+        "fields": [
+            {"fieldname": "author", "required": true, "fieldtype": "string"},
+            {"fieldname": "title", "required": true, "fieldtype": "string"},
+            {"fieldname": "pages", "required": false, "fieldtype": "string"},
+            {"fieldname": "doi", "required": false, "fieldtype": "string"}
+        ]
+    },
+    "incollection": {
+        "fields": [
+            {"fieldname": "author", "required": true, "fieldtype": "string"},
+            {"fieldname": "title", "required": true, "fieldtype": "string"},
+            {"fieldname": "booktitle", "required": false, "fieldtype": "string"},
+            {"fieldname": "publisher", "required": false, "fieldtype": "string"},
+            {"fieldname": "year", "required": false, "fieldtype": "integer"},
+            {"fieldname": "doi", "required": false, "fieldtype": "string"}
+        ]
+    },
+    "inproceedings": {
+        "fields": [
+            {"fieldname": "author", "required": true, "fieldtype": "string"},
+            {"fieldname": "title", "required": true, "fieldtype": "string"},
+            {"fieldname": "booktitle", "required": false, "fieldtype": "string"},
+            {"fieldname": "year", "required": false, "fieldtype": "integer"},
+            {"fieldname": "volume", "required": false, "fieldtype": "string"},
+            {"fieldname": "number", "required": false, "fieldtype": "string"},
+            {"fieldname": "pages", "required": false, "fieldtype": "string"},
+            {"fieldname": "doi", "required": false, "fieldtype": "string"}
+        ]
+    },
+    "manual": {
+        "fields": [
+            {"fieldname": "author", "required": true, "fieldtype": "string"},
+            {"fieldname": "title", "required": true, "fieldtype": "string"},
+            {"fieldname": "doi", "required": false, "fieldtype": "string"}
+        ]
+    },
+    "mastersthesis": {
+        "fields": [
+            {"fieldname": "author", "required": true, "fieldtype": "string"},
+            {"fieldname": "title", "required": true, "fieldtype": "string"},
+            {"fieldname": "school", "required": false, "fieldtype": "string"},
+            {"fieldname": "year", "required": false, "fieldtype": "integer"},
+            {"fieldname": "doi", "required": false, "fieldtype": "string"}
+        ]
+    },
+    "misc": {
+        "fields": [
+            {"fieldname": "author", "required": true, "fieldtype": "string"},
+            {"fieldname": "title", "required": true, "fieldtype": "string"},
+            {"fieldname": "howpublished", "required": false, "fieldtype": "string"},
+            {"fieldname": "year", "required": false, "fieldtype": "integer"},
+            {"fieldname": "doi", "required": false, "fieldtype": "string"}
+        ]
+    },
+    "phdthesis": {
+        "fields": [
+            {"fieldname": "author", "required": true, "fieldtype": "string"},
+            {"fieldname": "title", "required": true, "fieldtype": "string"},
+            {"fieldname": "school", "required": false, "fieldtype": "string"},
+            {"fieldname": "year", "required": false, "fieldtype": "integer"},
+            {"fieldname": "doi", "required": false, "fieldtype": "string"}
+        ]
+    },
+    "proceedings": {
+        "fields": [
+            {"fieldname": "title", "required": true, "fieldtype": "string"},
+            {"fieldname": "year", "required": false, "fieldtype": "integer"},
+            {"fieldname": "volume", "required": false, "fieldtype": "string"},
+            {"fieldname": "organization", "required": false, "fieldtype": "string"},
+            {"fieldname": "publisher", "required": false, "fieldtype": "string"},
+            {"fieldname": "doi", "required": false, "fieldtype": "string"}
+        ]
+    },
+    "techreport": {
+        "fields": [
+            {"fieldname": "author", "required": true, "fieldtype": "string"},
+            {"fieldname": "title", "required": true, "fieldtype": "string"},
+            {"fieldname": "institution", "required": false, "fieldtype": "string"},
+            {"fieldname": "year", "required": false, "fieldtype": "integer"},            
+            {"fieldname": "doi", "required": false, "fieldtype": "string"}
+        ]
+    },
+    "unpublished": {
+        "fields": [
+            {"fieldname": "author", "required": true, "fieldtype": "string"},
+            {"fieldname": "title", "required": true, "fieldtype": "string"},
+            {"fieldname": "year", "required": false, "fieldtype": "integer"},
+            {"fieldname": "doi", "required": false, "fieldtype": "string"}
+        ]
+    }
+}

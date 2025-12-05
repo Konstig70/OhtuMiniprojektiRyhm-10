@@ -5,6 +5,14 @@
 // NÄYTETÄÄNKÖ NAPIT VAI EI
 const naytaDevNapit = false;
 
+// ladataan viitteiden määrittelyt tiedostosta
+import viitedata from './viitemaarittelyt_v2.json'
+
+// tulostetaan viitteen yhden kentän tiedot konsoliin
+console.log('esimerkkikenttä:\n' + viitedata['book'].fields.map(item => `${item.fieldname}, ${item.required}, ${item.fieldtype}\n`).join(""));
+
+ 
+
 
 export function Devnapit() {
 
