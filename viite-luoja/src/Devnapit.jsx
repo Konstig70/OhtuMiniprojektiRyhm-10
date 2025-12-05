@@ -10,7 +10,7 @@ import viitedata from './viitemaarittelyt_v2.json'
 
 // tulostetaan viitteen yhden kentän tiedot konsoliin
 console.log('esimerkkikenttä:\n' + viitedata['book'].fields.map(item => `${item.fieldname}, ${item.required}, ${item.fieldtype}\n`).join(""));
-
+console.log(`${viitedata['book'].fields[2].fieldname} required is false: ${viitedata['book'].fields[2].required == false}`);
  
 
 
