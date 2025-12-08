@@ -4,7 +4,9 @@ import Lomake from './Lomake.jsx'
 import Devnapit from './Devnapit.jsx' // lisätty palvelimen testaamista varten pohja/Micke 25.11.
 import Esikatselu from './Esikatselu.jsx';
 import Listaus from './Listaus.jsx';
+import Tallennetut from './Tallennetut.jsx';
 import {poistaViite} from './funkkarit/poisto.js';
+import data from "./esimerkkidata.json" with { type: "json" };
 
 
 //Konsta 28.11: Hakee inputtien tiedot ja muodostaa niistä bibtex muotoisen viitteen
@@ -35,6 +37,9 @@ function lisaaViite(setViitteet) {
 
   //lisätään uusi viite
   setViitteet(prev => [...prev, uusiViite]);
+
+  //lisätään viite dataan joka näkyy tallennetut kentässä, ei tallennu tiedostoon
+  data.push(uusiViite);
   
   //Sitten vaan kutsukaa bibtex muotoon muuttamis funkkarii tolla arvot muuttujal 
 }
@@ -57,6 +62,7 @@ function App() {
       </div>
       <Esikatselu viitteet={viitteet} />{/*Viedään taulukko viitteistä, kunhan siltä osin valmista*/}
       <Listaus viitteet={viitteet} poistaViite={(poistettava) => poistaViite(viitteet, setViitteet, poistettava)}/>
+      <Tallennetut viitteet={data}/>
     </div>
     <Devnapit />
     </>
