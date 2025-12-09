@@ -7,7 +7,7 @@ function Tallennetut({viitteet}) {
     const KaikkiViitteet = () => {
         return(
       <ul id="viitelistaus">
-      {viitteet.map(item => <li id={item["citekey"]}><JsonToBibtex key={item["citekey"]} jsonObject={item}/></li>)}
+      {viitteet.map(item => <li key={item["citekey"]}><JsonToBibtex jsonObject={item}/></li>)}
       </ul>
     );
     }
