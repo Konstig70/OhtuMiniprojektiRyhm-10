@@ -74,3 +74,8 @@ select:hover {
 #esikatseluLegend {
   margin-left: 40px;;
 }
+
+.esikatseluContainer {
+  display: flex;
+  flex-direction: column;
+}

@@ -64,7 +64,6 @@ function tiedotLomakkeelle(setMuokattava, muokattava) {
 }
 
 function App() {
-  //Muistakaa laittaa tonne sitten <Lomake /> kun se tiedosto on luotu
   //Testi nappi on bäkkäriä varten tehty 
 
   //tila viitteille
@@ -80,10 +79,12 @@ function App() {
         <Lomake muokattava={muokattava} />
         <button onClick={() => lisaaViite(setViitteet)} id='viitteenLisays'>Lisää viite</button>
       </div>
+      <div className='esikatseluContainer'>  
       <Esikatselu viitteet={viitteet} />{/*Viedään taulukko viitteistä, kunhan siltä osin valmista*/}
       <Listaus viitteet={viitteet} 
 	  poistaViite={(poistettava) => poistaViite(viitteet, setViitteet, poistettava)}
 	  tiedotLomakkeelle={(muokattava) => tiedotLomakkeelle(setMuokattava, muokattava)}/> 
+      </div>
       <Tallennetut viitteet={data}/>
     </div>
     <Devnapit />
