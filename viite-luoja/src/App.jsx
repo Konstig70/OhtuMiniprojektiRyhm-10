@@ -7,6 +7,7 @@ import Listaus from './Listaus.jsx';
 import Tallennetut from './Tallennetut.jsx';
 import {poistaViite} from './funkkarit/poisto.js';
 import data from "./esimerkkidata.json" with { type: "json" };
+import checkRequired from './funkkarit/checkRequired.js';
 
 
 //Konsta 28.11: Hakee inputtien tiedot ja muodostaa niistä bibtex muotoisen viitteen
@@ -15,8 +16,20 @@ function lisaaViite(setViitteet) {
   //Haetaan inputit
   let inputit = document.getElementsByClassName("hakuKentta");
   //Haetaan inputeista arvot ja laitetaan taulukkoon
-  //const arvot = Array.from(inputit).map((i) => i.value);
+  const arvot = Array.from(inputit).map((i) => i.value);
   //console.log(arvot);
+
+  // Haetaan valittu viitetyyppi
+  const tyyppi = document.getElementById("tyyppiValinta").value.toLowerCase()
+
+  // Tarkistaa, onko kaikki pakolliset kentät täytetty
+  let check = checkRequired(arvot, tyyppi)
+  if (!check) {
+    return;
+  } else if (typeof check == "string") {
+    alert(`Pakollinen kenttä ${check} täyttämättä`)
+    return;
+  }
 
   //Jimi 2.12: Muutin tätä jonkin verran esikatseluun lisäystä varten
   //sanokaa jos on huono
