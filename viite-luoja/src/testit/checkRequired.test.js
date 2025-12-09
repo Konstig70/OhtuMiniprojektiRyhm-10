@@ -1,4 +1,4 @@
-import { expect, jest } from '@jest/globals';
+import { expect } from '@jest/globals';
 import checkRequired from '../funkkarit/checkRequired';
 
 describe('checkRequired', () => {
