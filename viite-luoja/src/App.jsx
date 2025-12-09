@@ -44,6 +44,11 @@ function lisaaViite(setViitteet) {
   //Sitten vaan kutsukaa bibtex muotoon muuttamis funkkarii tolla arvot muuttujal 
 }
 
+// Asettaa muokattavan viitteen tiedot. Lomake-komponentti hoitaa loput
+function tiedotLomakkeelle(setMuokattava, muokattava) {
+  setMuokattava(muokattava);
+  // Täällä varmaan kutsutaan tallennusfunktiota
+}
 
 function App() {
   //Muistakaa laittaa tonne sitten <Lomake /> kun se tiedosto on luotu
@@ -53,15 +58,19 @@ function App() {
   //lisätyt viitteet json-muodossa
   const [viitteet, setViitteet] = useState([]);
 
+  const [muokattava, setMuokattava] = useState({});
+
   return (
     <>
     <div className='appContainer'>
       <div>
-        <Lomake />
+        <Lomake muokattava={muokattava} />
         <button onClick={() => lisaaViite(setViitteet)} id='viitteenLisays'>Lisää viite</button>
       </div>
       <Esikatselu viitteet={viitteet} />{/*Viedään taulukko viitteistä, kunhan siltä osin valmista*/}
-      <Listaus viitteet={viitteet} poistaViite={(poistettava) => poistaViite(viitteet, setViitteet, poistettava)}/>
+      <Listaus viitteet={viitteet} 
+	  poistaViite={(poistettava) => poistaViite(viitteet, setViitteet, poistettava)}
+	  tiedotLomakkeelle={(muokattava) => tiedotLomakkeelle(setMuokattava, muokattava)}/> 
       <Tallennetut viitteet={data}/>
     </div>
     <Devnapit />

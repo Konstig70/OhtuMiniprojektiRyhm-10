@@ -1,13 +1,13 @@
-function Listaus({ viitteet, poistaViite }) {
+function Listaus({ viitteet, poistaViite, tiedotLomakkeelle }) {
   if (!viitteet || viitteet.length == 0) return;
 
   // Lista jokaisesta viitteestä
   const Lista = () => {
     return(
       <ul id="viitelistaus">
-      {viitteet.map(item => <li key={item["citekey"]}>
+      {viitteet.map(item => <li key={item["citekey"]} >
 	      <button onClick={() => poistaViite(item)}> x </button>
-	      {item["citekey"]}
+	      <a onClick={() => tiedotLomakkeelle(item)}>{item["citekey"]}</a>
 	      {Arvot(item)}
 	      </li>)}
       </ul>

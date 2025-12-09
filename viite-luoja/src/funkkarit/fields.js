@@ -19,7 +19,7 @@ export async function getFields(viitetyyppi, setNameList = null) {
       let result = await response.json();
       //Jos annettiin setNameList eli siis ei ole testi kyseessä, niin käytetään sitä
       if (setNameList) {
-        setNameList(result["fields"]);
+        setNameList({"tyyppi": viitetyyppi, "lista": result["fields"]});
         return;
       }
       return result;
