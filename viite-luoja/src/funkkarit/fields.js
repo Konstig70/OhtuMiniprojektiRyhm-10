@@ -1,31 +1,19 @@
-// Muokattu sendToBackEnd-funktio. Ilmeisesti oli tarkoitus muokata kyseistä funktiota ja kaikki backend kutsut
-// lähettää sen kautta, mutta en viitsinyt itsekseni alkaa muokkaamaan ettei mene rikki.
-// Kun sendToBackEnd on muokattu lopulliseen muotoon, tän voi kai poistaa
+import viitedata from '../viitemaarittelyt_v2.json' with { type: "json" };
+
 // Konsta 28.11 lisätty setNameList default arvo, jotta voidaan käyttää testeissä ja sovelluksessa
-export async function getFields(viitetyyppi, setNameList = null) {
-  try {
-    let obj = {"viitetyyppi": viitetyyppi};
-    let response = await fetch("https://ohtuminiprojektiryhm-10-backend.onrender.com/maarittelyt", {
-      method: "POST",
-      body: JSON.stringify(obj),
-      headers: { "Content-Type": "application/json" }
-      });
-      
-      if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`)
-      }
-      
-      // Otetaan vastauksena saadut kentät
-      let result = await response.json();
-      //Jos annettiin setNameList eli siis ei ole testi kyseessä, niin käytetään sitä
-      if (setNameList) {
-        setNameList({"tyyppi": viitetyyppi, "lista": result["fields"]});
-        return;
-      }
-      return result;
-    } catch (error) {
-      console.error(error);
-      return null
+// Hannes 10.12. Ei kutsuta backendiä ollenkaan, vaan luetaan viitteiden tiedot suoraan tiedostosta
+export function getFields(viitetyyppi, setNameList = null) {
+
+  // Tarkistetaan, löytyykö valitun viitteen tyyppi viitemäärittelyistä
+  let tyypit = Object.keys(viitedata)
+  if (!tyypit.includes(viitetyyppi)) return null
+
+  // Kerätään kentät taulukkoon
+  let kentat = viitedata[viitetyyppi].fields.map((item) => item.fieldname);
+  // Testaamista varten
+  if (setNameList) {
+    setNameList({"tyyppi": viitetyyppi, "lista": kentat});
+    return kentat;
   }
-  
+  return kentat;
 }

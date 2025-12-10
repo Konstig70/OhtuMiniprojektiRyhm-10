@@ -39,7 +39,7 @@ function Lomake({muokattava}) {
 	  nameList.tyyppi != muokattava["type"]) {
       getFields(muokattava["type"], setNameList);
   }
-  // Tekee pyynnön aina bäckendiin, kun valitsee eri viitetyypin, mikä on ehkä huono
+  
   const handleChange = (e) => {
     // Dropdown valikosta valittu viitetyyppi muutettuna pieneksi ja tyhjät merkit poistettuna, jotta haku toimii
     let valittu = e.target.value.toLowerCase().replaceAll(/\s/g,'')
