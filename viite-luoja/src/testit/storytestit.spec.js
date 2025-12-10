@@ -57,9 +57,10 @@ test('Käyttäjänä voin tallentaa nappia painamalla muodostuneen viite tiedost
   console.log("viite lisätty");
 
   //Tarkistus vaihe 1 haetaan kaikki span elementit
-  const viite = page.locator("p.esikatseluViite");
+  const viite = page.locator("ul#esikatseluLista p.esikatseluViite");
   const span = viite.locator("span");
   const spanlkm = await span.count(); 
+  console.log(span);
 
   //Vaihe 2 tutkitaan vastaako jokainen span oikeaa arvoa
   const odotettuViite = [
