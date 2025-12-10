@@ -1,4 +1,6 @@
+import {generateCitekey} from './citekey'
 export function muokkaaViite(esikatseluun, setViitteet, viitteet, setMuokattava, muokattava, setData, data){
+
   //Haetaan inputit
   let inputit = document.getElementsByClassName("hakuKentta");
 
@@ -37,7 +39,7 @@ export function muokkaaViite(esikatseluun, setViitteet, viitteet, setMuokattava,
     }
   } else {
     //väliaikainen citekey generaatio ennen oikeata
-    uusiViite.citekey = "testi" + Date.now();
+    uusiViite.citekey = generateCitekey(uusiViite);
     //lisätään uusi viite, jos uusi viite ei ole muokattava
     //lisätään esikatseluun jos painettu lisää viite nappia, muuten vaan tallennetaan dataan
     if (esikatseluun){
