@@ -5,7 +5,7 @@
 // esimerkki: console.log(await haeMetadata("10.3389/frvir.2024.1447288"));
 
 
-async function haeMetadata(doi) {       
+export async function haeMetadata(doi) {       
 
     // palauttaa metatiedot objektina    
     // virhetilanteessa palauttaa vain virheilmoituksen merkkijonona
