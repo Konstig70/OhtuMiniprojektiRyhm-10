@@ -180,9 +180,10 @@ function lueNimet (jsonData, avain) {
         return '';            
       case 1:
         return kirjoittajat[0];              
-      default:
+      default: { //Konsta 11.12, scoupattu default, jotta viimeinen kuuluu vaan default lauseelle
         let viimeinen = kirjoittajat.pop();
         return kirjoittajat.join(', ') + ' and ' + viimeinen;  
+      }
     }                        
                
 }
