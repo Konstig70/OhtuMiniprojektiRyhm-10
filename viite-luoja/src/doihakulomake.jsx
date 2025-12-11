@@ -24,7 +24,11 @@ export function Doihakulomake() {
             
             if (typeof hakutulos == 'string') {
                 setDoivirhe(hakutulos);
+                return null;
             }            
+            
+            // PUUTTUU: TIETOJEN VIENTI LOMAKKEELLE
+            console.log(hakutulos);
             
         }       
                     
