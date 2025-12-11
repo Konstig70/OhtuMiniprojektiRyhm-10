@@ -1,11 +1,16 @@
 import express from 'express';
 import cors from 'cors';
 import { haeKaikkiTyypit, haeTiettyTyyppi } from './apu.js';
+import { haeTietokannasta, lisaaTaiMuokkaa, poista, alusta } from './tietokanta_operaatiot.js';
+import { DatabaseSync } from 'node:sqlite';
 
 
 //Set uppi
+//Konsta 11.12 käynnistetään tietokanta yhteys myös
 const backend = express();
 const port = 3000;
+const polku = new URL("./tiedostot/tietokanta.db", import.meta.url);
+const db = new DatabaseSync(polku);
 
 //JSON käyttöön sekä CORS
 backend.use(express.json());
@@ -49,10 +54,62 @@ backend.post('/maarittelyt', async (req, res) => {
     }
 })
 
+//Lukee tietokannasta
+backend.get('/tietokanta/lue', async (req, res) => {
+    const response = haeTietokannasta(db);
+    if (response) {
+      res.json(response);
+    } else {
+      res.status(500).send('Error reading database');
+    }
+})
 
+//Lisää tai muokkaa riviä
+backend.post('/tietokanta/muokkaa', async (req, res) => {
+  const response = lisaaTaiMuokkaa(db, req.body.viite);
+  if (response.changes <= 1) {
+    res.status(200).send("ok");
+  } else {
+    res.status(500).send("Error when adding or modifying table");
+  }
+})
+
+//Poistaa rivin 
+backend.post('/tietokanta/poista', async (req, res) => {
+  const response = poista(db, req.body.viite.citekey);
+  if (response.changes <= 1) {
+    res.status(200).send("Ok");
+  } else {
+    res.status(500).send("Error when removing row from table");
+  }
+
+})
 
 //Loggaus, ei tarvii muuten tästä välittää
-backend.listen(port, () => {
-  console.log(`Backend listening on port ${port}`)
+const palvelin = backend.listen(port, () => {
+  console.log(`Backend listening on port ${port}`);
+   
 })
+
+//SULKEMIS OPERAATIOT 
+
+//Tulostaa viestin ja sulkee db yhteyden
+//jos halutaan tietää miksi suljettiin niin lisätkää signal tohon parametriks
+function sulje() {
+  console.log("Suljetaan bäkkäriä");
+  palvelin.close(() => {
+    try {
+      db.close();
+      console.log("Tietokanta suljettu");
+    } catch (e) {
+      console.log("Virhe tietokannan sulkemisessa");
+    }
+    process.exit(0);
+  });
+
+}
+
+process.on("SIGINT", sulje);
+process.on("SIGTERM", sulje);
+process.on("uncaughtException", sulje);
 

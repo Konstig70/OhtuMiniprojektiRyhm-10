@@ -6,14 +6,14 @@ import { DatabaseSync } from 'node:sqlite';
 
 export function testaaTietokanta() {
 
-    const tiedostopolkuTietokanta = new URL('./tietokanta.db', import.meta.url);
-    console.log(tiedostopolkuTietokanta);
-    const db = new DatabaseSync(tiedostopolkuTietokanta);
-    //const database = new DatabaseSync(':memory:');
-    
-    const taulu = "viitteet";
+  const tiedostopolkuTietokanta = new URL('./tietokanta.db', import.meta.url);
+  console.log(tiedostopolkuTietokanta);
+  const db = new DatabaseSync(tiedostopolkuTietokanta);
+  //const database = new DatabaseSync(':memory:');
 
-    db.exec(`
+  const taulu = "viitteet";
+
+  db.exec(`
       CREATE TABLE IF NOT EXISTS ${taulu}(
         citekey TEXT PRIMARY KEY UNIQUE NOT NULL,
         tyyppi TEXT,
@@ -29,26 +29,26 @@ export function testaaTietokanta() {
         ON DELETE CASCADE        
       ) STRICT
     `);
-    
-    // korjaa on update ja on delete ... 
 
-    const insert = db.prepare(`INSERT OR REPLACE INTO ${taulu} VALUES (?, ?, ?, ?)`);
-    insert.run('viite1', 'book', 'Chalmers', 'What is this thing called science?');
-    insert.run('viite2', 'article', 'Austin Powers', 'What is this thing about Dr. Evil?');
-    insert.run('viite3', 'article', 'Dr. Evil', 'Is Austin Powers really cool or not?');
-    
-    const insertTagit = db.prepare(`INSERT OR REPLACE INTO tagit VALUES (?, ?)`);
-    insertTagit.run('viite1', 'tagi1');
-    insertTagit.run('viite1', 'tagi2');
-    insertTagit.run('viite2', 'tagi2');
-    insertTagit.run('viite2', 'tagi3');       
-        
-    
-    //const query = db.prepare(`SELECT * FROM ${taulu} ORDER BY citekey`);
-    //console.log(query.all());
-    //console.log(JSON.stringify(query.all()));
-    
-    const query2 = db.prepare(`
+  // korjaa on update ja on delete ... 
+
+  const insert = db.prepare(`INSERT OR REPLACE INTO ${taulu} VALUES (?, ?, ?, ?)`);
+  insert.run('viite1', 'book', 'Chalmers', 'What is this thing called science?');
+  insert.run('viite2', 'article', 'Austin Powers', 'What is this thing about Dr. Evil?');
+  insert.run('viite3', 'article', 'Dr. Evil', 'Is Austin Powers really cool or not?');
+
+  const insertTagit = db.prepare(`INSERT OR REPLACE INTO tagit VALUES (?, ?)`);
+  insertTagit.run('viite1', 'tagi1');
+  insertTagit.run('viite1', 'tagi2');
+  insertTagit.run('viite2', 'tagi2');
+  insertTagit.run('viite2', 'tagi3');
+
+
+  //const query = db.prepare(`SELECT * FROM ${taulu} ORDER BY citekey`);
+  //console.log(query.all());
+  //console.log(JSON.stringify(query.all()));
+
+  const query2 = db.prepare(`
       SELECT ${taulu}.*, tagit
       FROM ${taulu}
       LEFT JOIN 
@@ -58,15 +58,15 @@ export function testaaTietokanta() {
           GROUP BY citekey
         ) AS viitteentagit 
       ON ${taulu}.citekey = viitteentagit.citekey      
-    `);    
-    
-    // json_group_array palauttaa string '["tagi1", ...]' -> JSON.parse -> ['tagi1', ...]
-    // null -> JSON.parse -> null
-  
-    console.log(query2.all());    
-    console.log(JSON.parse(query2.all()[0].tagit));
-    
-    db.close();
+    `);
+
+  // json_group_array palauttaa string '["tagi1", ...]' -> JSON.parse -> ['tagi1', ...]
+  // null -> JSON.parse -> null
+
+  console.log(query2.all());
+  console.log(JSON.parse(query2.all()[0].tagit));
+
+  db.close();
 
 }
 
