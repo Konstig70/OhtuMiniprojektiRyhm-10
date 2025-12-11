@@ -1,37 +1,73 @@
 // Luetaan crossref.org -palvelusta DOI-tiedon perusteella
 // julkaisun metatiedot ja palautetaan ne "bibtex-yhteensopivana"
 // objektina
-// 10.12.2025/Micke
-// esimerkki: console.log(await haeMetadata("10.3389/frvir.2024.1447288"));
+// 11.12.2025/Micke
+// esimerkki: 
+// console.log(await haeMetadata("10.3389/frvir.2024.1447288"));
+// console.log(await haeMetadata("https://doi.org/10.1037/edu0000473"));
 
 
-export async function haeMetadata(doi) {       
+export async function haeMetadata(doitunnus) {       
 
     // palauttaa metatiedot objektina    
     // virhetilanteessa palauttaa vain virheilmoituksen merkkijonona
+    
+    // parametri voi olla url tai doi-tunnus: 
+    // https://doi.org/10.1037/edu0000473
+    // 10.1037/edu0000473
+    const regex = /([0-9.]+\/\S+)/; // ei riittävä, mutta kelpaa
+    const doiMatch = doitunnus.match(regex);                       
+    
+    if (doiMatch === null) {
+        return `Tarkista DOI-tunnus: ${doitunnus}`;
+    }
+    
+    const hakuehto = doiMatch[0];
 
-    try{
-    
-        // https://api.crossref.org/works/doi/10.1128/mbio.01735-25
-        const apiurl = `https://api.crossref.org/works/doi/${doi.trim()}`;
-        
-        const response = await fetch(apiurl);              
+    const hakufunktio = async () => {
+       
+        try{        
+                          
+            // https://api.crossref.org/works/doi/10.1128/mbio.01735-25
+            const apiurl = `https://api.crossref.org/works/doi/${hakuehto}`;            
+            return await fetch(apiurl);                                          
                         
-        if (response.status == 404) {
-            return 'Metatietoja ei löytynyt.';
         }
-        else if (response.status != 200) {
-            return `Palvelu antoi virheviestin: ${response.status} ${response.statusText}.`;
-        }                                
-        
-        let data = await response.json();                          
-        return lueKentat(data.message);                    
-        
-    }
-    catch {
-        return 'Tuntematon virhe, palvelu ei vastaa?';
+        catch {
+            return 'Tuntematon virhe, palvelu ei vastaa?';
+        }
+    
     }
     
+    return kasitteleHaetutMetatiedot(hakufunktio);
+    
+}
+
+
+async function kasitteleHaetutMetatiedot(hakufunktio) {
+
+    // hakufunktio annetaan parametrissa, jotta voidaan testata virhetilanteet 
+
+    if (hakufunktio === undefined || typeof hakufunktio !== 'function') {
+        return 'Ohjelmassa on virhe.';    
+    }
+
+    const response = await hakufunktio();
+    
+    if (typeof response == 'string') {
+        return response;
+    }        
+    else if (response.status == 404) {
+        return 'Metatietoja ei löytynyt.';
+    }
+    else if (response.status != 200) {
+        return `Palvelu antoi virheviestin: ${response.status} ${response.statusText}.`;
+    }                                
+    
+    let data = await response.json();      
+        
+    return lueKentat(data.message);    
+
 }
 
 
@@ -148,7 +184,7 @@ function muunnaViitetyyppi(viitetyyppi) {
          return tyyppimuunnokset[viitetyyppi];                
     }
     else {
-        return null;
+        return 'misc';
     }
 
 }    
@@ -179,11 +215,9 @@ function lueNimet (jsonData, avain) {
       case 0:
         return '';            
       case 1:
-        return kirjoittajat[0];              
-      default: { //Konsta 11.12, scoupattu default, jotta viimeinen kuuluu vaan default lauseelle
-        let viimeinen = kirjoittajat.pop();
-        return kirjoittajat.join(', ') + ' and ' + viimeinen;  
-      }
+        return kirjoittajat[0];      
+      default:        
+        return kirjoittajat.slice(0, kirjoittajat.length - 1).join(', ') + ' AND ' + kirjoittajat[kirjoittajat.length - 1];  
     }                        
                
 }
