@@ -4,11 +4,15 @@
 const TAULU = `Viitteet`;
 
 /**
-  * Hakee tietokannasta kaikki viitteet. Järjestellään citekey:n perusteella 
+  * Hakee tietokannasta kaikki viitteet ja palautetaan ne JSON muodossa. Järjestellään citekey:n perusteella 
 */
 export function haeTietokannasta(db) {
+  //Haetaan kaikki
   const query = db.prepare('SELECT * FROM Viitteet ORDER BY citekey');
-  return query.all();
+  const rivit = query.all();
+  //Muutetaan JSON taulukoksi
+  const viitteet = rivit.map(rivi => JSON.parse(rivi.data));
+  return viitteet;
 }
 /**
   * Alustaa tietokannan eli luo uuden mikäli sitä ei ole olemassa
