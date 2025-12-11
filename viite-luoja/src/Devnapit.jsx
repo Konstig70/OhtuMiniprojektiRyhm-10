@@ -5,7 +5,7 @@
 // NÄYTETÄÄNKÖ NAPIT VAI EI
 const naytaDevNapit = true;
 
-import { Doihakulomake } from './Doihakulomake.jsx'
+import { Doihakulomake } from './doihakulomake.jsx'
 
 
 
