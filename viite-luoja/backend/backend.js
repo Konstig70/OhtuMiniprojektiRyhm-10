@@ -88,6 +88,7 @@ backend.post('/tietokanta/poista', async (req, res) => {
 //Loggaus, ei tarvii muuten tästä välittää
 const palvelin = backend.listen(port, () => {
   console.log(`Backend listening on port ${port}`);
+  alusta(db);
    
 })
 
@@ -102,7 +103,7 @@ function sulje() {
       db.close();
       console.log("Tietokanta suljettu");
     } catch (e) {
-      console.log("Virhe tietokannan sulkemisessa");
+      console.log("Virhe tietokannan sulkemisessa:" , e);
     }
     process.exit(0);
   });

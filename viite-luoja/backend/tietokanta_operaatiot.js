@@ -1,5 +1,5 @@
-import { DatabaseSync } from 'node:sqlite';
-import { readFileSync } from 'fs';
+//import { DatabaseSync } from 'node:sqlite';
+//import { readFileSync } from 'fs';
 
 const TAULU = `Viitteet`;
 
@@ -41,8 +41,9 @@ export function poista(db, citekey) {
 }
 
 /** 
- * Testi funkkari saa jaa
+ * Testi funkkari saa ajaa, ottakaa pois kommenteist sillo ja ottakaa pois kommenteist ne importit
  */
+/**
 function luoJaTayta() {
   const polku = new URL("./tiedostot/tietokanta.db", import.meta.url);
   let db = new DatabaseSync(polku);
@@ -62,4 +63,4 @@ function luoJaTayta() {
   console.log("Lisätään eka takasin", haeTietokannasta(db));
   db.close();
 }
-
+*/
