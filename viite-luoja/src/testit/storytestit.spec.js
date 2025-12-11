@@ -60,11 +60,10 @@ test('Käyttäjänä voin tallentaa nappia painamalla muodostuneen viite tiedost
   const viite = page.locator("ul#esikatseluLista p.esikatseluViite");
   const span = viite.locator("span");
   const spanlkm = await span.count(); 
-  console.log(span);
 
   //Vaihe 2 tutkitaan vastaako jokainen span oikeaa arvoa
   const odotettuViite = [
-  "@book{testi1764842080482,",
+  "@book{Martin08,",
   "    author = {Martin, Robert},",
   "    title = {Clean Code: A Handbook of Agile Software Craftsmanship},",
   "    publisher = {Prentice Hall},",
@@ -86,7 +85,7 @@ test('Käyttäjänä voin tallentaa nappia painamalla muodostuneen viite tiedost
     //Eri testi Id:n luonnille, sillä numerosarja generoidaan satunnaisesti, testataan vaan alku
     if (i === 0) {
       console.log("Testataan id");
-      expect(teksti?.startsWith("@book{testi")).toBe(true);
+      expect(teksti?.startsWith("@book{Martin08")).toBe(true);
     } else {
       //Muut testataan suoraan
       expect(teksti).toBe(odotettuViite[i]);
