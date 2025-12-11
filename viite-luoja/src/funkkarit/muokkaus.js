@@ -1,4 +1,5 @@
 import {generateCitekey} from './citekey'
+import {ensureUniqueCitekey} from './citekey'
 export function muokkaaViite(esikatseluun, setViitteet, viitteet, setMuokattava, muokattava, setData, data){
 
   //Haetaan inputit
@@ -38,8 +39,8 @@ export function muokkaaViite(esikatseluun, setViitteet, viitteet, setMuokattava,
       }
     }
   } else {
-    //väliaikainen citekey generaatio ennen oikeata
-    uusiViite.citekey = generateCitekey(uusiViite);
+    const citekey = generateCitekey(uusiViite);
+    uusiViite.citekey = ensureUniqueCitekey(citekey, data);
     //lisätään uusi viite, jos uusi viite ei ole muokattava
     //lisätään esikatseluun jos painettu lisää viite nappia, muuten vaan tallennetaan dataan
     if (esikatseluun){

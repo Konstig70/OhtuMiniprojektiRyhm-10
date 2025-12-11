@@ -58,3 +58,18 @@ function alkuTitlesta(title) {
 
     return lyhenne;
 }
+
+export function ensureUniqueCitekey(start, viitteet) {
+    const varatut = new Set(viitteet.map(viite => viite.citekey));
+
+    if (!varatut.has(start)) return start;
+
+    let counter = 1;
+    let key = `${start}_${counter}`;
+
+    while (varatut.has(key)) {
+        counter++;
+        key = `${start}_${counter}`;
+    }
+    return key;
+}
