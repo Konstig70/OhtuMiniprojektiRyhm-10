@@ -33,7 +33,7 @@ jobs:
       working-directory: ./viite-luoja
 
     - name: Run database tests
-      run: node backend\tietokanta_operaatiot.test.js --test
+      run: node backend/tietokanta_operaatiot.test.js --test
       working-directory: ./viite-luoja
   
     - name: Run tests
