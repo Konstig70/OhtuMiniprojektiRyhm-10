@@ -39,10 +39,10 @@ export function muokkaaViite(esikatseluun, setViitteet, viitteet, setMuokattava,
         setViitteet(prev => [...prev, uusiViite]);
     }
     setData(prev => [...prev, uusiViite]);
-    //12.12 Konsta: Lopuksi viedään palvelimelle muutokset:
-    viePalvelimelle(uusiViite);
   }
 
+  //12.12 Konsta: Lopuksi viedään palvelimelle muutokset:
+  viePalvelimelle(uusiViite);
   //asetetaan lomake tyhjäksi
   setMuokattava({});
 }

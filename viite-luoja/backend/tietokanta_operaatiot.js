@@ -8,7 +8,7 @@ const TAULU = `Viitteet`;
 */
 export function haeTietokannasta(db) {
   //Haetaan kaikki
-  const query = db.prepare('SELECT * FROM Viitteet');
+  const query = db.prepare(`SELECT * FROM ${TAULU}`);
   const rivit = query.all();
   //Muutetaan JSON taulukoksi
   const viitteet = rivit.map(rivi => JSON.parse(rivi.data));
