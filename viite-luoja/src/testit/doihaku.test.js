@@ -1,20 +1,51 @@
-// Luetaan crossref.org -palvelusta DOI-tiedon perusteella
-// julkaisun metatiedot ja palautetaan ne "bibtex-yhteensopivana"
-// objektina
-// 11.12.2025/Micke
-// esimerkki: 
-// console.log(await haeMetadata("10.3389/frvir.2024.1447288"));
-// console.log(await haeMetadata("https://doi.org/10.1037/edu0000473"));
+// 12.12.2025/Micke
 
 
+// export async function haeMetadata(doitunnus)
+// `Tarkista DOI-tunnus: ${doitunnus}`;
+
+// hakufunktio:
+// 'Tuntematon virhe, palvelu ei vastaa?'
+
+// kasitteleHaetutMetatiedot(hakufunktio) 
+// if (hakufunktio === undefined || typeof hakufunktio !== 'function') { return 'Ohjelmassa on virhe.'; }
+// const response = await hakufunktio();
+// if (response.status == 404) { return 'Metatietoja ei löytynyt.'; }
+// if (response.status != 200) { return `Palvelu antoi virheviestin: ${response.status} ${response.statusText}.`; }                                
+
+
+import { haeMetadata, kasitteleHaetutMetatiedot } from '../funkkarit/doihaku.js';
+
+
+describe('haeMetadata', () => {
+
+    test('Parametri puuttuu', async () => {
+        const result = await haeMetadata();
+        const expectedResult = 'Virheellinen parametri.'
+        expect(result).toEqual(expectedResult);
+    });
+
+    test('Parametri on null', async () => {
+        const result = await haeMetadata(null);
+        const expectedResult = 'Virheellinen parametri.'
+        expect(result).toEqual(expectedResult);
+    });  
+        
+    test('Parametri on tyhjä', async () => {
+        const result = await haeMetadata('');
+        const expectedResult = 'Tarkista DOI-tunnus: '
+        expect(result).toEqual(expectedResult);
+    });
+
+});
+
+
+
+/*
 export async function haeMetadata(doitunnus) {       
 
     // palauttaa metatiedot objektina    
     // virhetilanteessa palauttaa vain virheilmoituksen merkkijonona
-    
-    if (doitunnus === undefined || typeof doitunnus !== 'string') {
-        return 'Virheellinen parametri.'
-    }
     
     // parametri voi olla url tai doi-tunnus: 
     // https://doi.org/10.1037/edu0000473
@@ -48,7 +79,7 @@ export async function haeMetadata(doitunnus) {
 }
 
 
-export async function kasitteleHaetutMetatiedot(hakufunktio) {
+async function kasitteleHaetutMetatiedot(hakufunktio) {
 
     // hakufunktio annetaan parametrissa, jotta voidaan testata virhetilanteet 
 
@@ -263,5 +294,5 @@ function luePaivaysTaulukko(jsonData, avain) {
     return jsonData[avain]['date-parts'][0].map(arvo => arvo.toString()).concat(['', '', '']).slice(0, 3);
 
 }
-
+*/
 
