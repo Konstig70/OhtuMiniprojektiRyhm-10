@@ -13,11 +13,12 @@
 // if (response.status == 404) { return 'Metatietoja ei löytynyt.'; }
 // if (response.status != 200) { return `Palvelu antoi virheviestin: ${response.status} ${response.statusText}.`; }                                
 
+/*
 const obj = { 'hello': 'world' };
 const blob = new Blob([JSON.stringify(obj, null, 2)], {
   type: "application/json",
 });
-
+*/
 
 /*
 const obj = { hello: "world" };
