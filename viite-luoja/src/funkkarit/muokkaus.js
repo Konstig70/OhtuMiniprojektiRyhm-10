@@ -39,10 +39,26 @@ export function muokkaaViite(esikatseluun, setViitteet, viitteet, setMuokattava,
         setViitteet(prev => [...prev, uusiViite]);
     }
     setData(prev => [...prev, uusiViite]);
+    //12.12 Konsta: Lopuksi viedään palvelimelle muutokset:
+    viePalvelimelle(uusiViite);
   }
 
   //asetetaan lomake tyhjäksi
   setMuokattava({});
+}
+
+async function viePalvelimelle(data) {
+  const response = await fetch("https://ohtuminiprojektiryhm-10-backend.onrender.com/tietokanta/muokkaa", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ viite: data }),
+  });
+  if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    console.log("Update successfull!");
 }
 
 function haeInputeista() {

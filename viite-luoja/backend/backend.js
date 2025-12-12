@@ -66,7 +66,8 @@ backend.get('/tietokanta/lue', async (req, res) => {
 
 //Lisää tai muokkaa riviä
 backend.post('/tietokanta/muokkaa', async (req, res) => {
-  const response = lisaaTaiMuokkaa(db, req.body.viite);
+  const data = req.body.viite;
+  const response = lisaaTaiMuokkaa(db, data);
   if (response.changes <= 1) {
     res.status(200).send("ok");
   } else {
