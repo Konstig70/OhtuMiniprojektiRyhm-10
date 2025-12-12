@@ -33,6 +33,12 @@ select:hover {
   text-transform: capitalize;
 }
 
+#virhe {
+  text-transform: none;
+  margin-left: 40px;
+  color: rgb(216, 74, 74);
+}
+
 .inputContainer label > input {
   width: 250px;
   padding: 5px;
@@ -74,10 +80,6 @@ select:hover {
 .kopioi img {
   display: block;
   text-align: center;
-}
-
-#esikatseluLegend {
-  margin-left: 40px;;
 }
 
 .esikatseluContainer {

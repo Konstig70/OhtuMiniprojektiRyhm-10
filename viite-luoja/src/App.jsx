@@ -29,9 +29,17 @@ function lisaaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, d
   if (!check) {
     return;
   } else if (typeof check == "string") {
-    alert(`Pakollinen kenttä ${check} täyttämättä`)
+    let kentta = document.getElementsByName(check).item(0)
+    console.log(kentta)
+    let teksti = document.createElement("p")
+    teksti.id = "virhe"
+    teksti.innerHTML = `Pakollinen kenttä ${check} täyttämättä`
+    kentta.insertAdjacentElement("afterend", teksti)
+    kentta.focus()
+    //setVirhe(`Pakollinen kenttä ${check} täyttämättä`)
     return;
   }
+
   //kutsutaan funktiota joka joko muokkaa viitettä tai lisää sen uutena
   muokkaaViite(true, setViitteet, viitteet, setMuokattava, muokattava, setData, data);
 
@@ -96,12 +104,13 @@ function App() {
   }
   return (
     <>
-      <div className='appContainer'>
-        <div className='lomake'>
-          <Lomake muokattava={muokattava} />
-          <button onClick={() => tallennaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data)}>Tallenna</button>
-          <button onClick={() => lisaaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data)} id='viitteenLisays'>Lisää viite</button>
-          <Doihakulomake />
+    <div className='appContainer'>
+      <div className='lomake'>
+        <Lomake muokattava={muokattava} />
+        <button onClick={() => tallennaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data)}>Tallenna</button>
+        <button onClick={() => lisaaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data)} id='viitteenLisays'>Lisää viite</button>
+        <p id="virhe"></p>
+        <Doihakulomake />
         </div>
         <div className='esikatseluContainer'>
           <Esikatselu viitteet={viitteet} />{/*Viedään taulukko viitteistä, kunhan siltä osin valmista*/}
