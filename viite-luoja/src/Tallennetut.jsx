@@ -13,7 +13,7 @@ function Tallennetut({viitteet}) {
     }
 
     return (
-        <div>
+        <div className='tallennetutViitteet'>
             <legend>Tallennetut viitteet</legend>
            <KaikkiViitteet/>
         </div>

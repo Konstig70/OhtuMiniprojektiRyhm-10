@@ -37,7 +37,7 @@ export function Doihakulomake() {
     return(
         <div className='inputContainer'>
             <label>{'DOI: '}
-                <input type="text" className='hakuKentta' onChange={tallennaDoi} defaultValue=''/>
+                <input type="text" className='doiHaku' onChange={tallennaDoi} defaultValue=''/>
                 <button className="doihaku" onClick={haeMetatiedot}>Hae metatiedot</button>
             </label>
             <div>{doivirhe}</div>

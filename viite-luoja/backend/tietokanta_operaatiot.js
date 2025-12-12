@@ -14,6 +14,7 @@ export function haeTietokannasta(db) {
   const viitteet = rivit.map(rivi => JSON.parse(rivi.data));
   return viitteet;
 }
+
 /**
   * Alustaa tietokannan eli luo uuden mikäli sitä ei ole olemassa
 */

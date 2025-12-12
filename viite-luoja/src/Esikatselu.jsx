@@ -43,7 +43,8 @@ function Esikatselu({ viitteet }) {
       <div className="esikatselu">
         <Kentat />
       </div>
-      <button className="kopioi" onClick={kopioiViitteet}><img src="./viite-luoja/src/assets/copy-icon.svg" alt="🗐"/></button>
+      <button className="kopioi" onClick={kopioiViitteet}><img src="./viite-luoja/src/assets/copy-icon.svg" alt="🗐Kopio tästä 🗐"/></button>
+      
     </div>
   )
 }

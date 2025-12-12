@@ -5,7 +5,6 @@
 // NÄYTETÄÄNKÖ NAPIT VAI EI
 const naytaDevNapit = true;
 
-import { Doihakulomake } from './doihakulomake.jsx'
 
 
 
@@ -19,7 +18,6 @@ export function Devnapit() {
         <DownloadButton textOutput={"rivi 1\nrivi 2\n"} />    
       </div>
       <p>Esimerkki: https://doi.org/10.1037/edu0000473</p>
-      <Doihakulomake />      
     </>
     );
 

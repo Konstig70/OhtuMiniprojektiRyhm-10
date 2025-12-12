@@ -26,6 +26,7 @@ select:hover {
 .inputContainer {
   text-align: left;
   margin-bottom: 12px;
+  margin-top: 10px;
 }
 
 .inputContainer label {
@@ -47,7 +48,7 @@ select:hover {
 .esikatselu {
   padding-bottom: 10px;
   padding-top: 10px;
-  padding-right: 40px;
+  margin-right: 40px;
   background-color: #2e2e2e;
   text-align: left;
   margin-left: 50px;
@@ -59,16 +60,21 @@ select:hover {
 
 .appContainer {
   display: flex;
+  gap: 2vw;
+  width: 80vw;
+  margin-bottom: 5vh;
 }
 
 .kopioi {
-  margin-left: 50px;
+  margin-left: 40px;
+  background-color: #2e2e2e;
+  margin-top: 20px;
+  margin-right: 40px;
 }
 
 .kopioi img {
   display: block;
-  height: 20px;  
-  width: 20px;
+  text-align: center;
 }
 
 #esikatseluLegend {
@@ -78,4 +84,28 @@ select:hover {
 .esikatseluContainer {
   display: flex;
   flex-direction: column;
+  background-color: #1A1A1A;
+  border-radius: 30px;
+  width: 30vw;
+  overflow-y: scroll;
+  height: 600px;
+}
+
+.tallennetutViitteet {
+  background-color: #1A1A1A;
+  border-radius: 30px;
+  margin: 20px;
+  margin-right: 0;
+  height: 500px;  
+  overflow-y: scroll;
+}
+
+#devnapit {
+  
+}
+
+.lomake {
+  background-color: #1A1A1A;
+  padding: 20px;
+  border-radius: 30px;
 }

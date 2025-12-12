@@ -9,7 +9,7 @@ import {poistaViite} from './funkkarit/poisto.js';
 import { muokkaaViite } from './funkkarit/muokkaus.js';
 import esimerkkidata from "./esimerkkidata.json" with { type: "json" };
 import checkRequired from './funkkarit/checkRequired.js';
-
+import { Doihakulomake } from './doihakulomake.jsx'
 
 
 //Konsta 28.11: Hakee inputtien tiedot ja muodostaa niistä bibtex muotoisen viitteen
@@ -42,6 +42,8 @@ function lisaaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, d
 //viite tallennetaan mutta ei lisätä esikatseluun
 function tallennaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data) {
   //kutsutaan funktiota joka joko muokkaa viitettä tai lisää sen uutena
+  //
+
   muokkaaViite(false, setViitteet, viitteet, setMuokattava, muokattava, setData, data);
 }
 
@@ -65,11 +67,12 @@ function App() {
   return (
     <>
     <div className='appContainer'>
-      <div>
+      <div className='lomake'>
         <Lomake muokattava={muokattava} />
         <button onClick={() => tallennaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data)}>Tallenna</button>
         <button onClick={() => lisaaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data)} id='viitteenLisays'>Lisää viite</button>
-      </div>
+        <Doihakulomake />
+        </div>
       <div className='esikatseluContainer'>  
       <Esikatselu viitteet={viitteet} />{/*Viedään taulukko viitteistä, kunhan siltä osin valmista*/}
       <Listaus viitteet={viitteet} 

@@ -1,24 +1,16 @@
 import {generateCitekey} from './citekey'
 import {ensureUniqueCitekey} from './citekey'
-export function muokkaaViite(esikatseluun, setViitteet, viitteet, setMuokattava, muokattava, setData, data){
+export function muokkaaViite(esikatseluun, setViitteet, viitteet, setMuokattava, muokattava, setData, data, tiedot=null){
 
-  //Haetaan inputit
-  let inputit = document.getElementsByClassName("hakuKentta");
+  var uusiViite;
 
-  //Jimi 2.12: Muutin tätä jonkin verran esikatseluun lisäystä varten
-  //sanokaa jos on huono
-  let uusiViite = {};
-
-  for (let input of inputit) {
-    uusiViite[input.name] = input.value;
+  if (!tiedot) {
+    uusiViite = haeInputeista();
+  } else {
+    uusiViite = tiedot;
   }
-
-  //haetaan viitteen tyyppi
-  let select = document.querySelector("select");
-  let type = select.value.toLowerCase().replace(/\s/g, "");
-
-  uusiViite.type = type;
   
+
   //jos viite on valittu muokattavaksi tallennetaan uudet tiedot viitteisiin ja dataan citekeyn avulla
   if (muokattava != {} && muokattava.citekey != undefined) {
     uusiViite.citekey = muokattava.citekey;
@@ -51,4 +43,25 @@ export function muokkaaViite(esikatseluun, setViitteet, viitteet, setMuokattava,
 
   //asetetaan lomake tyhjäksi
   setMuokattava({});
+}
+
+function haeInputeista() {
+    //Haetaan inputit
+  let inputit = document.getElementsByClassName("hakuKentta");
+
+  //Jimi 2.12: Muutin tätä jonkin verran esikatseluun lisäystä varten
+  //sanokaa jos on huono
+  let uusiViite = {};
+
+  for (let input of inputit) {
+    uusiViite[input.name] = input.value;
+  }
+
+  //haetaan viitteen tyyppi
+  let select = document.querySelector("select");
+  let type = select.value.toLowerCase().replace(/\s/g, "");
+
+  uusiViite.type = type;
+  return uusiViite;
+
 }
