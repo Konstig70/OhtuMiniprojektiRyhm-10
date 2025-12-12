@@ -7,7 +7,6 @@ import Listaus from './Listaus.jsx';
 import Tallennetut from './Tallennetut.jsx';
 import { poistaViite } from './funkkarit/poisto.js';
 import { muokkaaViite } from './funkkarit/muokkaus.js';
-import esimerkkidata from "./esimerkkidata.json" with { type: "json" };
 import checkRequired from './funkkarit/checkRequired.js';
 import { Doihakulomake } from './doihakulomake.jsx'
 
