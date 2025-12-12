@@ -13,6 +13,27 @@
 // if (response.status == 404) { return 'Metatietoja ei löytynyt.'; }
 // if (response.status != 200) { return `Palvelu antoi virheviestin: ${response.status} ${response.statusText}.`; }                                
 
+const obj = { 'hello': 'world' };
+const blob = new Blob([JSON.stringify(obj, null, 2)], {
+  type: "application/json",
+});
+
+
+/*
+const obj = { hello: "world" };
+const blob = new Blob([JSON.stringify(obj, null, 2)], {
+  type: "application/json",
+});
+
+
+//const response = new Response( String('tekstiä') , { status: 200, headers: {'content-type': 'application/json'}});
+const response = new Response( blob, { status: 200 });
+
+console.log(blob);
+console.log(response);
+console.log(await response.json());
+*/
+
 
 import { haeMetadata, kasitteleHaetutMetatiedot } from '../funkkarit/doihaku.js';
 
@@ -31,14 +52,132 @@ describe('haeMetadata', () => {
         expect(result).toEqual(expectedResult);
     });  
         
-    test('Parametri on tyhjä', async () => {
+    test('Parametri on tyhjä merkkijono', async () => {
         const result = await haeMetadata('');
         const expectedResult = 'Tarkista DOI-tunnus: '
         expect(result).toEqual(expectedResult);
     });
 
+    test('Virheellinen doi-tunnus', async () => {
+        const result = await haeMetadata('abcde/efghijkl');
+        const expectedResult = 'Tarkista DOI-tunnus: abcde/efghijkl'
+        expect(result).toEqual(expectedResult);
+    });
+    
+    test('Virheellinen doi-url', async () => {
+        const result = await haeMetadata('https://doi.org/abcde/fghij');
+        const expectedResult = 'Tarkista DOI-tunnus: https://doi.org/abcde/fghij'
+        expect(result).toEqual(expectedResult);
+    });
+
 });
 
+describe('kasitteleHaetutMetatiedot', () => {   
+
+    test('Annettu hakufunktio ei ole funktio', async () => {        
+        const result = await kasitteleHaetutMetatiedot();
+        const expectedResult = 'Ohjelmassa on virhe.'
+        expect(result).toEqual(expectedResult);
+    });     
+    
+    test('Palvelin ei vastaa', async () => {
+        const mockHakufunktio = () => {return 'en vastaa'};
+        const result = await kasitteleHaetutMetatiedot(mockHakufunktio);
+        const expectedResult = 'en vastaa';
+        expect(result).toEqual(expectedResult);
+    });   
+
+    test('Palvelin palauttaa virheen', async () => {
+        const mockHakufunktio = () => {return {'status': 666, 'statusText': 'virhe'}};
+        const result = await kasitteleHaetutMetatiedot(mockHakufunktio);
+        const expectedResult = 'Palvelu antoi virheviestin: 666 virhe.';
+        expect(result).toEqual(expectedResult);
+    });     
+
+    test('Metatietoja ei löytynyt', async () => {
+        const mockHakufunktio = () => {return {'status': 404}};
+        const result = await kasitteleHaetutMetatiedot(mockHakufunktio);
+        const expectedResult = 'Metatietoja ei löytynyt.';
+        expect(result).toEqual(expectedResult);
+    });  
+
+    /*
+    const obj = { hello: "world" };
+    const blob = new Blob([JSON.stringify(obj, null, 2)], {
+      type: "application/json",
+    });
+
+
+    //const response = new Response( String('tekstiä') , { status: 200, headers: {'content-type': 'application/json'}});
+    const response = new Response( blob, { status: 200 });
+
+    console.log(blob);
+    console.log(response);
+    console.log(await response.json());
+    */
+    test('Metatietojen muunnos ei onnistunut', async () => {
+        const mockHakufunktio = async () => {
+            const obj = { hello: "world" };
+            const blob = new Blob([JSON.stringify(obj, null, 2)], { type: "application/json" });
+            const response = new Response( blob, { status: 200 });
+            return await response;
+        };
+        
+        const result = await kasitteleHaetutMetatiedot(mockHakufunktio);
+        const expectedResult = 'Metatietojen muunnoksessa tuli virhe.';
+        expect(result).toEqual(expectedResult);
+    }); 
+    
+
+ // 'Metatietojen muunnoksessa tuli virhe.';
+ 
+ /*
+ Response {
+  status: 200,
+  statusText: 'OK',
+  headers: Headers {
+    date: 'Fri, 12 Dec 2025 11:41:29 GMT',
+    'content-type': 'application/json',
+    'content-length': '5588',
+    connection: 'keep-alive',
+    'access-control-expose-headers': 'Link',
+    'access-control-allow-headers': 'X-Requested-With, Accept, Accept-Encoding, Accept-Charset, Accept-Language, Accept-Ranges, Cache-Control',
+    'access-control-allow-origin': '*',
+    vary: 'Accept-Encoding',
+    'content-encoding': 'gzip',
+    server: 'Jetty(9.4.40.v20210413)',
+    'x-rate-limit': '5',
+    'x-rate-limit-interval': '1s',
+    'x-concurrency-limit': '1',
+    'x-api-pool': 'public',
+    'permissions-policy': 'interest-cohort=()'
+  },
+  body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true },
+  bodyUsed: false,
+  ok: true,
+  redirected: false,
+  type: 'basic',
+  url: 'https://api.crossref.org/works/doi/10.3389/frvir.2024.1447288'
+}
+{
+  author: 'Querl, Patrick, Raymond Leonardo Chandra, Djamel Berkaoui, Koen Castermans AND Heribert Nacken',
+  booktitle: 'Does self-paced learning in mobile flood protection unit construction in virtual reality have advantages over traditional measures?',
+  editor: '',
+  journal: 'Frontiers in Virtual Reality',
+  month: '12',
+  publisher: 'Frontiers Media SA',
+  series: 'Frontiers in Virtual Reality',
+  title: 'Does self-paced learning in mobile flood protection unit construction in virtual reality have advantages over traditional measures?',
+  type: 'article',
+  volume: '5',
+  year: '2024',
+  doi: '10.3389/frvir.2024.1447288',
+  url: 'https://doi.org/10.3389/frvir.2024.1447288',
+  citekey: 'Querl2024'
+}
+*/
+
+});
 
 
 /*
