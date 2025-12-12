@@ -11,9 +11,7 @@ import checkRequired from './funkkarit/checkRequired.js';
 import { Doihakulomake } from './doihakulomake.jsx'
 
 
-//Konsta 28.11: Hakee inputtien tiedot ja muodostaa niistä bibtex muotoisen viitteen
-//Tätä funktioo voi myös jatkaa ja lisätä sen kentälle lisäämisen myös tähän
-function lisaaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data) {
+function tarkistaPakolliset() {
   //Haetaan inputit
   let inputit = document.getElementsByClassName("hakuKentta");
   //Haetaan inputeista arvot ja laitetaan taulukkoon
@@ -25,19 +23,41 @@ function lisaaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, d
 
   // Tarkistaa, onko kaikki pakolliset kentät täytetty
   let check = checkRequired(arvot, tyyppi)
-  if (!check) {
-    return;
+  let teksti = document.getElementById("virhe")
+  if (!check) { 
+    // Jos virheellinen tyyppi, palautetaan false
+    return false;
   } else if (typeof check == "string") {
     let kentta = document.getElementsByName(check).item(0)
-    console.log(kentta)
-    let teksti = document.createElement("p")
-    teksti.id = "virhe"
-    teksti.innerHTML = `Pakollinen kenttä ${check} täyttämättä`
-    kentta.insertAdjacentElement("afterend", teksti)
+    let lisaysNappi = document.getElementById("viitteenLisays")
+    // Jos ruudulla ei ole varoitustekstiä, luodaan sellainen ja laitetaan lisäysnapin alle
+    if (!teksti) {
+      teksti = document.createElement("p")
+      teksti.id = "virhe"
+      teksti.innerHTML = `Pakollinen kenttä ${check} täyttämättä`
+      lisaysNappi.insertAdjacentElement("afterend", teksti)
+    } else {
+      // Jos ruudulla on jo varoitusteksti, poistetaan se ja luodaan uusi tilalle
+      teksti.remove()
+      teksti.innerHTML = `Pakollinen kenttä ${check} täyttämättä`
+      lisaysNappi.insertAdjacentElement("afterend", teksti)
+    }
+    // Asetetaan fokus ensimmäiseen puuttuvaan pakolliseen kenttään ja palautetaan false
     kentta.focus()
-    //setVirhe(`Pakollinen kenttä ${check} täyttämättä`)
-    return;
+    return false;
   }
+
+  // Poistaa olemassaolevan varoituksen, jos lisäys onnistuu
+  if (teksti) teksti.remove()
+  return true
+}
+
+//Konsta 28.11: Hakee inputtien tiedot ja muodostaa niistä bibtex muotoisen viitteen
+//Tätä funktioo voi myös jatkaa ja lisätä sen kentälle lisäämisen myös tähän
+function lisaaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data) {
+  
+  // Poistutaan, jos pakollisia viitteitä ei täytetty
+  if (!tarkistaPakolliset()) return
 
   //kutsutaan funktiota joka joko muokkaa viitettä tai lisää sen uutena
   muokkaaViite(true, setViitteet, viitteet, setMuokattava, muokattava, setData, data);
@@ -48,9 +68,11 @@ function lisaaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, d
 
 //viite tallennetaan mutta ei lisätä esikatseluun
 function tallennaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data) {
-  //kutsutaan funktiota joka joko muokkaa viitettä tai lisää sen uutena
-  //
+  
+  // Poistutaan, jos pakollisia viitteitä ei täytetty
+  if (!tarkistaPakolliset()) return
 
+  //kutsutaan funktiota joka joko muokkaa viitettä tai lisää sen uutena
   muokkaaViite(false, setViitteet, viitteet, setMuokattava, muokattava, setData, data);
 }
 
@@ -108,7 +130,6 @@ function App() {
         <Lomake muokattava={muokattava} />
         <button onClick={() => tallennaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data)}>Tallenna</button>
         <button onClick={() => lisaaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data)} id='viitteenLisays'>Lisää viite</button>
-        <p id="virhe"></p>
         <Doihakulomake />
         </div>
         <div className='esikatseluContainer'>
