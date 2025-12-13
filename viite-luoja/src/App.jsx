@@ -79,7 +79,6 @@ function tallennaViite(setViitteet, viitteet, setMuokattava, muokattava, setData
 // Asettaa muokattavan viitteen tiedot. Lomake-komponentti hoitaa loput
 function tiedotLomakkeelle(setMuokattava, muokattava) {
   setMuokattava(muokattava);
-  // Täällä varmaan kutsutaan tallennusfunktiota
 }
 
 async function haeTietokannasta() {
@@ -138,7 +137,9 @@ function App() {
             poistaViite={(poistettava) => poistaViite(viitteet, setViitteet, poistettava)}
             tiedotLomakkeelle={(muokattava) => tiedotLomakkeelle(setMuokattava, muokattava)} />
         </div>
-        <Tallennetut viitteet={data} />
+        <Tallennetut viitteet={data}
+	  poistaViite={(poistettava) => poistaViite(data, setData, poistettava)}
+	  tiedotLomakkeelle={(muokattava) => tiedotLomakkeelle(setMuokattava, muokattava)} />
       </div>
       <Devnapit />
     </>
