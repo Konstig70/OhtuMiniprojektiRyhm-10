@@ -6,7 +6,6 @@
 // console.log(await haeMetadata("10.3389/frvir.2024.1447288"));
 // console.log(await haeMetadata("https://doi.org/10.1037/edu0000473"));
 
-
 export async function haeMetadata(doitunnus) {       
 
     // palauttaa metatiedot objektina    
@@ -56,8 +55,10 @@ export async function kasitteleHaetutMetatiedot(hakufunktio) {
         return 'Ohjelmassa on virhe.';    
     }
 
-    const response = await hakufunktio();
-    
+    const response = await hakufunktio();    
+           
+    // nämä ovat tässä hakufunktion sijaan jotta voidaan
+    // testata palvelimen virhetilanteet (yksinkertaisesti)
     if (typeof response == 'string') {
         return response;
     }        
@@ -68,88 +69,140 @@ export async function kasitteleHaetutMetatiedot(hakufunktio) {
         return `Palvelu antoi virheviestin: ${response.status} ${response.statusText}.`;
     }                                
     
-    let data = await response.json();      
-        
-    return lueKentat(data.message);    
+    let data = await response.json();
+    
+    return lueKentat(data.message);        
 
 }
 
 
-function lueKentat(jsonData) { 
-
+export function lueKentat(jsonData) { 
+      
     // luetaan verkkopalvelusta saadusta datasta halutut kentät
     // palautetaan objekti
     
-    // lisätään citekey jos kirjoittajien nimet ja julkaisuvuosi löytyy
-       
-    const kenttamuunnokset = {
-        'address': null,
-        'annote': null,
-        'author': () => lueNimet(jsonData, 'author'),
-        'booktitle': () => lueTaulukosta(jsonData, 'title', 0),
-        'chapter': null,
-        'edition': null,
-        'editor': () => lueNimet(jsonData, 'editor'),
-        'howpublished': null,
-        'institution': null,
-        'journal': () => lueTaulukosta(jsonData, 'container-title', 0), 
-        'month': () => luePaivaysTaulukko(jsonData, 'published')[1],
-        'note': null,
-        'number': 'issue',
-        'organization': null, 
-        'pages': 'page', 
-        'publisher': 'publisher', 
-        'school': null, 
-        'series': () => lueTaulukosta(jsonData, 'container-title', 0),
-        'title': () => lueTaulukosta(jsonData, 'title', 0),
-        'type': () => muunnaViitetyyppi(jsonData.type), 
-        'volume': 'volume',
-        'year': () => luePaivaysTaulukko(jsonData, 'published')[0],
-        'doi': 'DOI', 
-        'issn': null, 
-        'isbn': null, 
-        'url': 'URL'
-    }
-   
-    let luettuData = {};
+    // lisätään citekey:
+    // ensimmäinen kirjoittaja + julkaisuvuosi, tai
+    // ensimmäinen editor + julkaisuvuosi, tai
+    // muokattu doi-tunnus
     
-    Object.keys(kenttamuunnokset).forEach(avain => {
+    try {
     
-        switch (typeof kenttamuunnokset[avain]) {
-            case 'object':
-                // null, ei osata lukea 
-                break;
-            case 'function':
-                luettuData[avain] = kenttamuunnokset[avain]();
-                break;
-            default:
-                // luetaan kenttä
-                if (Object.prototype.hasOwnProperty.call(jsonData, kenttamuunnokset[avain])) {
-                    luettuData[avain] = jsonData[kenttamuunnokset[avain]];
-                }
-                break;
+        const kenttamuunnokset = {
+            'address': null,
+            'annote': null,
+            'author': () => lueNimet(jsonData, 'author'),
+            'booktitle': () => lueTaulukosta(jsonData, 'title', 0),
+            'chapter': null,
+            'edition': null,
+            'editor': () => lueNimet(jsonData, 'editor'),
+            'howpublished': null,
+            'institution': null,
+            'journal': () => lueTaulukosta(jsonData, 'container-title', 0), 
+            'month': () => luePaivaysTaulukko(jsonData, 'published')[1],
+            'note': null,
+            'number': 'issue',
+            'organization': null, 
+            'pages': 'page', 
+            'publisher': 'publisher', 
+            'school': null, 
+            'series': () => lueTaulukosta(jsonData, 'container-title', 0),
+            'title': () => lueTaulukosta(jsonData, 'title', 0),
+            'type': () => lueViitetyyppi(jsonData, 'type'), 
+            'volume': 'volume',
+            'year': () => luePaivaysTaulukko(jsonData, 'published')[0],
+            'doi': 'DOI', 
+            'issn': null, 
+            'isbn': null, 
+            'url': 'URL'
         }
-            
-    });
+       
+        let luettuData = {};
         
-    const pilkunIndeksi = luettuData.author.indexOf(',');        
-    const julkaisuvuosi = luettuData.year;
+        Object.keys(kenttamuunnokset).forEach(avain => {
+        
+            switch (typeof kenttamuunnokset[avain]) {
+                case 'object':
+                    // null, ei osata lukea 
+                    break;
+                case 'function':
+                    // ei lisätä tyhjiä kenttiä
+                    {
+                        const arvo = kenttamuunnokset[avain]();
+                        if (arvo.length > 0) {
+                            luettuData[avain] = arvo;
+                        }
+                    }
+                    break;
+                default:
+                    // luetaan kenttä
+                    if (Object.prototype.hasOwnProperty.call(jsonData, kenttamuunnokset[avain])) {
+                        luettuData[avain] = jsonData[kenttamuunnokset[avain]];
+                    }
+                    break;
+            }
+                
+        });            
+               
+        const citekey = luoCitekey(luettuData);
+        
+        if (citekey.length > 0) {
+            luettuData.citekey = citekey;
+        }
+        
+        if (Object.keys(luettuData).length == 0) {
+            return 'Metatietojen muunnoksessa tuli virhe.';
+        }
+        
+        return luettuData;
     
-    if (pilkunIndeksi >= 0 && julkaisuvuosi.length > 0) {
-        luettuData.citekey = luettuData.author.slice(0, pilkunIndeksi) + julkaisuvuosi;
     }
-    
-    return luettuData;
+    catch {
+        return 'Metatietojen muunnoksessa tuli virhe.';
+    }
     
 }
 
 
-function muunnaViitetyyppi(viitetyyppi) {
+export function luoCitekey(jsonData) {
+
+    if (typeof jsonData !== 'object') {
+        return '';
+    }
+    
+    const pilkunIndeksiAuthor = Object.prototype.hasOwnProperty.call(jsonData, 'author') ? jsonData.author.indexOf(',') : -1;        
+    const pilkunIndeksiEditor = Object.prototype.hasOwnProperty.call(jsonData, 'editor') ? jsonData.editor.indexOf(',') : -1;        
+    const julkaisuvuosi = Object.prototype.hasOwnProperty.call(jsonData, 'year') ? jsonData.year : '';  
+    const doi = Object.prototype.hasOwnProperty.call(jsonData, 'doi') ? jsonData.doi : ''; 
+    
+    if (pilkunIndeksiAuthor >= 0 && julkaisuvuosi.length > 0) {
+        return jsonData.author.slice(0, pilkunIndeksiAuthor) + julkaisuvuosi;
+    }
+    else if (pilkunIndeksiEditor >= 0 && julkaisuvuosi.length > 0) {
+        return jsonData.editor.slice(0, pilkunIndeksiEditor) + julkaisuvuosi;
+    }
+    else if (doi.length > 0) {
+        // hätäratkaisuna muodostetaan citekey DOI-tunnuksesta
+        return doi.replaceAll(/[^a-zA-Z0-9]/g, '');            
+    }
+    
+    return '';
+
+}
+
+
+export function lueViitetyyppi(jsonData, avain) {
     
     // muunnetaan crossref.org-palvelun käyttämä viitetyyppi bibtex-muotoon
     
     // aika moni on laitettu tyypiksi 'misc', koska on vaikea arvailla
-    // mikä bibtex-tyyppi olisi sopiva ilman laajempaa otosta... 
+    // mikä bibtex-tyyppi olisi sopiva ilman laajempaa otosta...                     
+    
+    if (typeof jsonData !== 'object' || 
+        typeof avain !== 'string' ||
+        !Object.prototype.hasOwnProperty.call(jsonData, avain)) {
+        return '';
+    }
     
     const tyyppimuunnokset = {
       'book-section': 'inbook',
@@ -182,7 +235,9 @@ function muunnaViitetyyppi(viitetyyppi) {
       'dataset': 'misc',
       'book-series': 'incollection',
       'edited-book': 'book'
-    };
+    };      
+      
+    const viitetyyppi = jsonData[avain];
 
     if (Object.prototype.hasOwnProperty.call(tyyppimuunnokset, viitetyyppi)) {             
          return tyyppimuunnokset[viitetyyppi];                
@@ -194,13 +249,15 @@ function muunnaViitetyyppi(viitetyyppi) {
 }    
 
 
-function lueNimet (jsonData, avain) { 
+export function lueNimet(jsonData, avain) { 
 
     // muodostetaan kirjoittajien (tai kustannustoimittajien, editor)
     // nimistä merkkijono: sukunimi, etunimi, etunimi sukunimi and etunimi sukunimi
     // eli jokseenkin Chigago-tyyliin
                
-    if (!Object.prototype.hasOwnProperty.call(jsonData, avain) ||
+    if (typeof jsonData !== 'object' || 
+        typeof avain !== 'string' ||
+        !Object.prototype.hasOwnProperty.call(jsonData, avain) ||
         typeof jsonData[avain] !== 'object') { 
         return '';
     }               
@@ -221,32 +278,35 @@ function lueNimet (jsonData, avain) {
       case 1:
         return kirjoittajat[0];      
       default:        
-        return kirjoittajat.slice(0, kirjoittajat.length - 1).join(', ') + ' AND ' + kirjoittajat[kirjoittajat.length - 1];  
+        return kirjoittajat.slice(0, kirjoittajat.length - 1).join(', ') + ' and ' + kirjoittajat[kirjoittajat.length - 1];  
     }                        
                
 }
 
 
-function lueTaulukosta(jsonData, avain, indeksi) {
+export function lueTaulukosta(jsonData, avain, indeksi) {
 
     // oletetaan että avaimen avulla luettava kenttä on taulukko,
     // josta luetaan indeksin osoittama arvo
 
-    if (!Object.prototype.hasOwnProperty.call(jsonData, avain) ||
+    if (typeof jsonData !== 'object' || 
+        typeof avain !== 'string' ||
+        typeof indeksi !== 'number' ||
+        !Object.prototype.hasOwnProperty.call(jsonData, avain) ||
         typeof jsonData[avain] !== 'object') { 
         return '';
-    }
-
+    }      
+    
     if (indeksi < 0 || jsonData[avain].length < indeksi + 1) {        
         return '';
     }
     
-    return jsonData[avain][indeksi];
+    return jsonData[avain][indeksi].toString();
 
 }
 
 
-function luePaivaysTaulukko(jsonData, avain) {
+export function luePaivaysTaulukko(jsonData, avain) {
 
     // oletetaan että avaimen avulla luettava kenttä on objekti,
     // jolla on avain 'date-parts', joka on myös taulukko     
@@ -254,12 +314,16 @@ function luePaivaysTaulukko(jsonData, avain) {
     // (osa tai kaikki voi olla tyhjiä merkkijonoja)
   
     // published: { 'date-parts': [ [2025, 12, 24] ] } kuukausi ja päivä voi puuttua!
-    if (!Object.prototype.hasOwnProperty.call(jsonData[avain], 'date-parts') ||
+    if (typeof jsonData !== 'object' || 
+        typeof avain !== 'string' ||        
+        !Object.prototype.hasOwnProperty.call(jsonData, avain) ||
+        !Object.prototype.hasOwnProperty.call(jsonData[avain], 'date-parts') ||
         typeof jsonData[avain]['date-parts'] !== 'object' ||
-        jsonData[avain]['date-parts'].length == 0) { 
+        jsonData[avain]['date-parts'].length == 0 ||
+        jsonData[avain]['date-parts'][0].length == 0 ) { 
         return ['', '', ''];
-    }
- 
+    }    
+     
     return jsonData[avain]['date-parts'][0].map(arvo => arvo.toString()).concat(['', '', '']).slice(0, 3);
 
 }
