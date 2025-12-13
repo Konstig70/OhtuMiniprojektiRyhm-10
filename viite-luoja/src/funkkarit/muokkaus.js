@@ -16,12 +16,21 @@ export function muokkaaViite(esikatseluun, setViitteet, viitteet, setMuokattava,
     uusiViite.citekey = muokattava.citekey;
     let viitteetKopio = [...viitteet];
     let dataKopio = [...data];
+    let loytyi = false;
     for (let i=0; i < viitteetKopio.length; i++){
       if (viitteetKopio[i].citekey === muokattava.citekey) {
         viitteetKopio.splice(i, 1, uusiViite);
         setViitteet(viitteetKopio);
+        loytyi = true;
         break;
       }
+    }
+    // jos muokattava viite halutaan lisätä esikatseluun, mutta
+    // sitä ei löytynyt listasta, lisätään se
+    // (esim. muokataan tallennettua viitettä ja painetaan Lisää viite -nappia)
+    if (!loytyi && esikatseluun) {
+      viitteetKopio.push(uusiViite);
+      setViitteet(viitteetKopio);
     }
     for (let i=0; i < dataKopio.length; i++){
       if (dataKopio[i].citekey === muokattava.citekey){

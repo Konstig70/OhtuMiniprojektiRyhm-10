@@ -4,7 +4,6 @@
 //Myöhemmin tuodaan tiedostosta kaikki tallennetut viitteet mutta alustavasti käytetään esimerkkidataa
 function Tallennetut({viitteet, poistaViite, tiedotLomakkeelle}) {
 
-    // Muokkaus toimii, mutta lisääminen ei
     // Poisto vaikuttaa tällä hetkellä vain tähän listaukseen
     const KaikkiViitteet = () => {
         return(
