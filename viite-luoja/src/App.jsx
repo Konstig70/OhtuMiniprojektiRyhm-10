@@ -82,9 +82,13 @@ function tiedotLomakkeelle(setMuokattava, muokattava) {
 }
 
 async function haeTietokannasta() {
+  const API_KEY = import.meta.env.VITE_API_AVAIN;
   const url = "https://ohtuminiprojektiryhm-10-backend.onrender.com/tietokanta/lue";
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {"API-Avain": API_KEY},
+    });
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
