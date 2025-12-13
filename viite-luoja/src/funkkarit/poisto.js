@@ -1,10 +1,12 @@
-export function poistaViite(viitteet, setViitteet, poistettava) {
+export function poistaViite(viitteet, setViitteet, poistettava, testi = null) {
   console.log("poistetaan", poistettava["type"], poistettava["citekey"]); // debug
   let kopio = viitteet.filter(item => item["citekey"] != poistettava["citekey"]);
   setViitteet(kopio);
   
   //Konsta 13.12 Poistetaan myös palvelimelta 
-  viePalvelimelle(poistettava);
+  if (!testi) {
+    viePalvelimelle(poistettava);
+  }
   return kopio;
 }
 

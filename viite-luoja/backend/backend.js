@@ -26,6 +26,17 @@ backend.post('/', (req, res) => {
   res.send(`Hello ${message.nimi} from backend!`)  
 })
 
+function tarkistaAvain(req, res, next) {
+  const saatuAvain = req.header('API-Avain');
+  if (saatuAvain != ODOTETTU_AVAIN) {
+    return res.status(401).send('Vääri API-Avain');
+  }
+
+  next();
+}
+
+backend.use(tarkistaAvain);
+
 // listataan viitteiden tyypit JSON-muodossa
 backend.get('/viitetyypit', async (req, res) => {        
     
@@ -95,16 +106,7 @@ const palvelin = backend.listen(port, () => {
 })
 
 
-function tarkistaAvain(req, res, next) {
-  const saatuAvain = req.header('API-Avain');
-  if (saatuAvain != ODOTETTU_AVAIN) {
-    return res.status(401).send('Vääri API-Avain');
-  }
 
-  next();
-}
-
-backend.use(tarkistaAvain);
 
 //SULKEMIS OPERAATIOT 
 
