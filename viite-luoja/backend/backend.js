@@ -11,6 +11,7 @@ const backend = express();
 const port = 3000;
 const polku = new URL("./tiedostot/tietokanta.db", import.meta.url);
 const db = new DatabaseSync(polku);
+const ODOTETTU_AVAIN = process.env.API_AVAIN;
 
 //JSON käyttöön sekä CORS
 backend.use(express.json());
@@ -92,6 +93,18 @@ const palvelin = backend.listen(port, () => {
   alusta(db);
    
 })
+
+
+function tarkistaAvain(req, res, next) {
+  const saatuAvain = req.header('API-Avain');
+  if (saatuAvain != ODOTETTU_AVAIN) {
+    return res.status(401).send('Vääri API-Avain');
+  }
+
+  next();
+}
+
+backend.use(tarkistaAvain);
 
 //SULKEMIS OPERAATIOT 
 

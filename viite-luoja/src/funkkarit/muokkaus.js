@@ -48,9 +48,11 @@ export function muokkaaViite(esikatseluun, setViitteet, viitteet, setMuokattava,
 }
 
 async function viePalvelimelle(data) {
+  const API_KEY = import.meta.env.VITE_API_AVAIN;
   const response = await fetch("https://ohtuminiprojektiryhm-10-backend.onrender.com/tietokanta/muokkaa", {
     method: "POST",
     headers: {
+      "Api-Avain": API_KEY, 
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ viite: data }),
