@@ -40,8 +40,16 @@ export function muokkaaViite(esikatseluun, setViitteet, viitteet, setMuokattava,
       }
     }
   } else {
-    const citekey = generateCitekey(uusiViite);
-    uusiViite.citekey = ensureUniqueCitekey(citekey, data);
+  
+    // 14.12.2025/Micke, ei luoda uutta citekeytä jos se on jo olemassa
+    if (Object.prototype.hasOwnProperty.call(uusiViite, 'citekey') && uusiViite.citekey.length > 0) {
+        uusiViite.citekey = ensureUniqueCitekey(uusiViite.citekey, data);
+    }
+    else {
+        const citekey = generateCitekey(uusiViite);
+        uusiViite.citekey = ensureUniqueCitekey(citekey, data);
+    }
+    
     //lisätään uusi viite, jos uusi viite ei ole muokattava
     //lisätään esikatseluun jos painettu lisää viite nappia, muuten vaan tallennetaan dataan
     if (esikatseluun){

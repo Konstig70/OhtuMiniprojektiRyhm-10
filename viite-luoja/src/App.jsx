@@ -10,6 +10,7 @@ import { muokkaaViite } from './funkkarit/muokkaus.js';
 import checkRequired from './funkkarit/checkRequired.js';
 import { Doihakulomake } from './doihakulomake.jsx'
 
+// muokattu 14.12.2025/Micke lisätty DOI-hakutuloksen tallennus
 
 function tarkistaPakolliset() {
   //Haetaan inputit
@@ -133,7 +134,7 @@ function App() {
         <Lomake muokattava={muokattava} />
         <button onClick={() => tallennaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data)}>Tallenna</button>
         <button onClick={() => lisaaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data)} id='viitteenLisays'>Lisää viite</button>
-        <Doihakulomake />
+        <Doihakulomake tallennusfunktio={(metadata) => muokkaaViite(false, setViitteet, viitteet, setMuokattava, muokattava, setData, data, metadata)}/>
         </div>
         <div className='esikatseluContainer'>
           <Esikatselu viitteet={viitteet} />{/*Viedään taulukko viitteistä, kunhan siltä osin valmista*/}
