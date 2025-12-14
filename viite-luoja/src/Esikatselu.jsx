@@ -1,6 +1,8 @@
 import { JsonToBibtex } from './funkkarit/jsonToBibtex.jsx';
+import { Latausnappi } from './Latausnappi.jsx';
 
 // Muokattu 1.12.2025/Micke, lisätty BibTeX-datan luonti JsonToBibtex-funktiolla
+// Muokattu 14.12.2025/Micke, lisätty esikatseluun tiedoston latausnappi
 
 // Kopioitu suoraan stack overflowsta
 function copyTextToClipboard(text) {
@@ -44,7 +46,7 @@ function Esikatselu({ viitteet }) {
         <Kentat />
       </div>
       <button className="kopioi" onClick={kopioiViitteet}><img src="./viite-luoja/src/assets/copy-icon.svg" alt="🗐Kopio tästä 🗐"/></button>
-      
+      <Latausnappi />
     </div>
   )
 }
