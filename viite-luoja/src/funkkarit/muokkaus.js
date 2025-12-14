@@ -1,6 +1,6 @@
 import {generateCitekey} from './citekey'
 import {ensureUniqueCitekey} from './citekey'
-export function muokkaaViite(esikatseluun, setViitteet, viitteet, setMuokattava, muokattava, setData, data, tiedot=null){
+export function muokkaaViite(esikatseluun, setViitteet, viitteet, setMuokattava, muokattava, setData, data, tiedot=null, testi=null){
 
   var uusiViite;
 
@@ -51,7 +51,9 @@ export function muokkaaViite(esikatseluun, setViitteet, viitteet, setMuokattava,
   }
 
   //12.12 Konsta: Lopuksi viedään palvelimelle muutokset:
-  viePalvelimelle(uusiViite);
+  if (!testi) {
+    viePalvelimelle(uusiViite);
+  }
   //asetetaan lomake tyhjäksi
   setMuokattava({});
 }
