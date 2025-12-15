@@ -113,13 +113,16 @@ function App() {
   const [muokattava, setMuokattava] = useState({});
   const [lataa, setLataa] = useState(true);
   const [data, setData] = useState(null);
-   
+  let kaikkiViitteet = null;
   useEffect(() => {
     //Huijataan eli laitetaan useEffect sisälle async funktio, koska itse react funktio ei voi olla async 
     async function lataa() { 
       //Laitetaan Data ja poistetaan lataus  
-      setData(await haeTietokannasta());
+      const tiedot = await haeTietokannasta();
+      setData(tiedot);
+      kaikkiViitteet = tiedot;
       setLataa(false);
+      console.log(kaikkiViitteet);
     }
     lataa();
   }, []);
@@ -129,6 +132,7 @@ function App() {
   }
   return (
     <>
+        <h1> Tervetuloa! </h1>
     <div className='appContainer'>
       <div className='lomakeJaEsikatselu'>
         
@@ -148,7 +152,7 @@ function App() {
         </div>
         <Tallennetut viitteet={data}
 	  poistaViite={(poistettava) => poistaViite(data, setData, poistettava)}
-	  tiedotLomakkeelle={(muokattava) => tiedotLomakkeelle(setMuokattava, muokattava)} />
+	  tiedotLomakkeelle={(muokattava) => tiedotLomakkeelle(setMuokattava, muokattava)}/>
       </div>
       <Devnapit />
     </>
