@@ -1,6 +1,6 @@
 import {generateCitekey} from './citekey'
 import {ensureUniqueCitekey} from './citekey'
-export function muokkaaViite(esikatseluun, setViitteet, viitteet, setMuokattava, muokattava, setData, data, tiedot=null, testi=null){
+export function muokkaaViite(esikatseluun, setViitteet, viitteet, setMuokattava, muokattava, setData, data, setKaikki, tiedot=null, testi=null){
 
   var uusiViite;
 
@@ -9,7 +9,8 @@ export function muokkaaViite(esikatseluun, setViitteet, viitteet, setMuokattava,
   } else {
     uusiViite = tiedot;
   }
-  
+
+  console.log(uusiViite);
 
   //jos viite on valittu muokattavaksi tallennetaan uudet tiedot viitteisiin ja dataan citekeyn avulla
   if (muokattava != {} && muokattava.citekey != undefined) {
@@ -21,6 +22,7 @@ export function muokkaaViite(esikatseluun, setViitteet, viitteet, setMuokattava,
       if (viitteetKopio[i].citekey === muokattava.citekey) {
         viitteetKopio.splice(i, 1, uusiViite);
         setViitteet(viitteetKopio);
+        setKaikki(viitteetKopio);
         loytyi = true;
         break;
       }
@@ -31,11 +33,13 @@ export function muokkaaViite(esikatseluun, setViitteet, viitteet, setMuokattava,
     if (!loytyi && esikatseluun) {
       viitteetKopio.push(uusiViite);
       setViitteet(viitteetKopio);
+      setKaikki(viitteetKopio);
     }
     for (let i=0; i < dataKopio.length; i++){
       if (dataKopio[i].citekey === muokattava.citekey){
         dataKopio.splice(i, 1, uusiViite);
         setData(dataKopio);
+        setKaikki(dataKopio);
         break;
       }
     }
@@ -53,9 +57,10 @@ export function muokkaaViite(esikatseluun, setViitteet, viitteet, setMuokattava,
     //lisätään uusi viite, jos uusi viite ei ole muokattava
     //lisätään esikatseluun jos painettu lisää viite nappia, muuten vaan tallennetaan dataan
     if (esikatseluun){
-        setViitteet(prev => [...prev, uusiViite]);
+        setViitteet(prev => [...prev, uusiViite]); 
     }
     setData(prev => [...prev, uusiViite]);
+    setKaikki(prev => [...prev, uusiViite]);
   }
 
   //12.12 Konsta: Lopuksi viedään palvelimelle muutokset:

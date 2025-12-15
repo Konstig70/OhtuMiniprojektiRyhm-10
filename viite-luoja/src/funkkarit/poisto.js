@@ -1,8 +1,11 @@
-export function poistaViite(viitteet, setViitteet, poistettava, testi = null) {
+export function poistaViite(viitteet, setViitteet, poistettava, testi = null, setKaikki) {
   console.log("poistetaan", poistettava["type"], poistettava["citekey"]); // debug
   let kopio = viitteet.filter(item => item["citekey"] != poistettava["citekey"]);
   setViitteet(kopio);
-  
+  //Jos halutaan vaikuttaa myös kokolistaukseen
+  if (setKaikki) {
+    setKaikki(kopio);
+  }
   //Konsta 13.12 Poistetaan myös palvelimelta 
   if (!testi) {
     viePalvelimelle(poistettava);

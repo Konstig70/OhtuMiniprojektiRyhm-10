@@ -55,26 +55,27 @@ function tarkistaPakolliset() {
 
 //Konsta 28.11: Hakee inputtien tiedot ja muodostaa niistä bibtex muotoisen viitteen
 //Tätä funktioo voi myös jatkaa ja lisätä sen kentälle lisäämisen myös tähän
-function lisaaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data) {
+function lisaaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data, setKaikki) {
   
   // Poistutaan, jos pakollisia viitteitä ei täytetty
   if (!tarkistaPakolliset()) return
 
   //kutsutaan funktiota joka joko muokkaa viitettä tai lisää sen uutena
-  muokkaaViite(true, setViitteet, viitteet, setMuokattava, muokattava, setData, data);
+  muokkaaViite(true, setViitteet, viitteet, setMuokattava, muokattava, setData, data, setKaikki);
 
 
   //Sitten vaan kutsukaa bibtex muotoon muuttamis funkkarii tolla arvot muuttujal 
 }
 
 //viite tallennetaan mutta ei lisätä esikatseluun
-function tallennaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data) {
+function tallennaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data, setKaikki) {
   
   // Poistutaan, jos pakollisia viitteitä ei täytetty
   if (!tarkistaPakolliset()) return
 
+  
   //kutsutaan funktiota joka joko muokkaa viitettä tai lisää sen uutena
-  muokkaaViite(false, setViitteet, viitteet, setMuokattava, muokattava, setData, data);
+  muokkaaViite(false, setViitteet, viitteet, setMuokattava, muokattava, setData, data, setKaikki);
 }
 
 // Asettaa muokattavan viitteen tiedot. Lomake-komponentti hoitaa loput
@@ -113,16 +114,15 @@ function App() {
   const [muokattava, setMuokattava] = useState({});
   const [lataa, setLataa] = useState(true);
   const [data, setData] = useState(null);
-  let kaikkiViitteet = null;
+  const [kaikki, setKaikki] = useState([]);
   useEffect(() => {
     //Huijataan eli laitetaan useEffect sisälle async funktio, koska itse react funktio ei voi olla async 
     async function lataa() { 
       //Laitetaan Data ja poistetaan lataus  
       const tiedot = await haeTietokannasta();
       setData(tiedot);
-      kaikkiViitteet = tiedot;
+      setKaikki(tiedot);
       setLataa(false);
-      console.log(kaikkiViitteet);
     }
     lataa();
   }, []);
@@ -139,9 +139,9 @@ function App() {
       
       <div className='lomake'>
         <Lomake muokattava={muokattava} />
-        <button onClick={() => tallennaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data)}>Tallenna</button>
-        <button onClick={() => lisaaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data)} id='viitteenLisays'>Lisää viite</button>
-        <Doihakulomake tallennusfunktio={(metadata) => muokkaaViite(false, setViitteet, viitteet, setMuokattava, muokattava, setData, data, metadata)}/>
+        <button onClick={() => tallennaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data, setKaikki)}>Tallenna</button>
+        <button onClick={() => lisaaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data, setKaikki)} id='viitteenLisays'>Lisää viite</button>
+        <Doihakulomake tallennusfunktio={(metadata) => muokkaaViite(false, setViitteet, viitteet, setMuokattava, muokattava, setData, data, setKaikki, metadata)}/>
         </div>
         <div className='esikatseluContainer'>
           <Esikatselu viitteet={viitteet} />{/*Viedään taulukko viitteistä, kunhan siltä osin valmista*/}
@@ -151,8 +151,10 @@ function App() {
         </div>
         </div>
         <Tallennetut viitteet={data}
-	  poistaViite={(poistettava) => poistaViite(data, setData, poistettava)}
-	  tiedotLomakkeelle={(muokattava) => tiedotLomakkeelle(setMuokattava, muokattava)}/>
+	  poistaFunktio={(poistettava) => poistaViite(data, setData, poistettava, null, setKaikki)}
+	  tiedotLomakkeelle={(muokattava) => tiedotLomakkeelle(setMuokattava, muokattava)}
+    kaikkiViitteet={kaikki}
+    setState={setData}/>
       </div>
       <Devnapit />
     </>

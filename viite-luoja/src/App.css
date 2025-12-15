@@ -103,13 +103,14 @@ select:hover {
   overflow-y: scroll;
   background-color: #1A1A1A;
   border-radius: 30px;
+  width: 60vw;
 
 }
 
 .tallennetutContainer {
   display: flex;
   flex-direction: row; 
-  margin-right: 19.5vw;
+  margin-right: 11.5vw;
   gap: 6vw;
 
 
