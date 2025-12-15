@@ -62,9 +62,16 @@ select:hover {
   white-space: pre;
 }
 
+.lomakeJaEsikatselu {
+  display: flex;
+  flex-direction: row;
+  gap: 5vw;
+}
+
 .appContainer {
   display: flex;
-  gap: 2vw;
+  flex-direction: column;
+  gap: 3vw;
   width: 80vw;
   margin-bottom: 5vh;
 }
@@ -94,8 +101,7 @@ select:hover {
 .tallennetutViitteet {
   background-color: #1A1A1A;
   border-radius: 30px;
-  margin: 20px;
-  margin-right: 0;
+  margin-right: 19.5vw;
   height: 500px;  
   overflow-y: scroll;
 }

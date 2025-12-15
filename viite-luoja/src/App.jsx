@@ -130,6 +130,9 @@ function App() {
   return (
     <>
     <div className='appContainer'>
+      <div className='lomakeJaEsikatselu'>
+        
+      
       <div className='lomake'>
         <Lomake muokattava={muokattava} />
         <button onClick={() => tallennaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data)}>Tallenna</button>
@@ -141,6 +144,7 @@ function App() {
           <Listaus viitteet={viitteet}
             poistaViite={(poistettava) => poistaViite(viitteet, setViitteet, poistettava)}
             tiedotLomakkeelle={(muokattava) => tiedotLomakkeelle(setMuokattava, muokattava)} />
+        </div>
         </div>
         <Tallennetut viitteet={data}
 	  poistaViite={(poistettava) => poistaViite(data, setData, poistettava)}
