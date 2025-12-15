@@ -119,7 +119,7 @@ test.describe("E2E testit käyttäjän operaatioista", () => {
     console.log(a);
 
     //Haetaan inputit ja tarkistetaan, että tiedot ovat oikeat
-    const inputit = page.locator('input[type="text"]');
+/*    const inputit = page.locator('input[type="text"]');
 
     const tiedot = [
       "Martin, Robert",
@@ -127,7 +127,7 @@ test.describe("E2E testit käyttäjän operaatioista", () => {
       "Prentice Hall",
       "2008",
       "10.1234/example.doi.5678",
-    ]
+    ]*/
 
   });
 
