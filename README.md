@@ -7,6 +7,9 @@
 ### Sovelluksen verkkosivu  
 [Sovellus](https://ohtuminiprojektiryhm-10.onrender.com/)
 
+### Linkki kattavuusraporttiin
+[Raportti](https://ohtuminiprojektiryhm-10-coverage.onrender.com)
+
 ### Asennus omalle koneelle  
 * Asenna Node: https://nodejs.org/  
 * Kloonaa repositorio: git clone https://github.com/Konstig70/OhtuMiniprojektiRyhm-10.git  
