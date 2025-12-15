@@ -10,8 +10,6 @@ export function muokkaaViite(esikatseluun, setViitteet, viitteet, setMuokattava,
     uusiViite = tiedot;
   }
 
-  console.log(uusiViite);
-
   //jos viite on valittu muokattavaksi tallennetaan uudet tiedot viitteisiin ja dataan citekeyn avulla
   if (muokattava != {} && muokattava.citekey != undefined) {
     uusiViite.citekey = muokattava.citekey;
@@ -22,6 +20,7 @@ export function muokkaaViite(esikatseluun, setViitteet, viitteet, setMuokattava,
       if (viitteetKopio[i].citekey === muokattava.citekey) {
         viitteetKopio.splice(i, 1, uusiViite);
         setViitteet(viitteetKopio);
+        //Lisätään master dataan, tää tehdään aikalailla kaikkialla
         setKaikki(viitteetKopio);
         loytyi = true;
         break;

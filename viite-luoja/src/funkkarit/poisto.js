@@ -2,7 +2,7 @@ export function poistaViite(viitteet, setViitteet, poistettava, testi = null, se
   console.log("poistetaan", poistettava["type"], poistettava["citekey"]); // debug
   let kopio = viitteet.filter(item => item["citekey"] != poistettava["citekey"]);
   setViitteet(kopio);
-  //Jos halutaan vaikuttaa myös kokolistaukseen
+  //Jos halutaan vaikuttaa myös kokolistaukseen eli master dataan 
   if (setKaikki) {
     setKaikki(kopio);
   }

@@ -114,6 +114,8 @@ function App() {
   const [muokattava, setMuokattava] = useState({});
   const [lataa, setLataa] = useState(true);
   const [data, setData] = useState(null);
+  //Konsta 15.12 Pitää sisällään kaikki viitteet, ns master data
+  //Tätä annetaan nyt lisäys, muokkaus ja poisto funktioihin. Tarvitaan, jotta näytettävät viitteet suodattuu oikein ilman, että menetetään viitteittä.
   const [kaikki, setKaikki] = useState([]);
   useEffect(() => {
     //Huijataan eli laitetaan useEffect sisälle async funktio, koska itse react funktio ei voi olla async 
@@ -139,7 +141,7 @@ function App() {
       
       <div className='lomake'>
         <Lomake muokattava={muokattava} />
-        <button onClick={() => tallennaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data, setKaikki)}>Tallenna</button>
+        <button onClick={() => tallennaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data, setKaikki)}>Tallenna</button> 
         <button onClick={() => lisaaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data, setKaikki)} id='viitteenLisays'>Lisää viite</button>
         <Doihakulomake tallennusfunktio={(metadata) => muokkaaViite(false, setViitteet, viitteet, setMuokattava, muokattava, setData, data, setKaikki, metadata)}/>
         </div>
