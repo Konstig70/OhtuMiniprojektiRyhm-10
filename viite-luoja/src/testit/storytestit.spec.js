@@ -104,7 +104,8 @@ test.describe("E2E testit käyttäjän operaatioista", () => {
 
   test("Käyttäjänä voin muokata lisäämiäni viitteitä", async ({ page }) => {
     await page.goto("https://ohtuminiprojektiryhm-10.onrender.com/");
-
+    //Odotetaan, että tulee näkyviin
+    await page.locator("#viitelistaus > li").first().waitFor({ state: 'visible' });
     //Haetaan kaikki tallennetut viitteet
     const viitteet = page.locator("#viitelistaus > li");
 
@@ -112,17 +113,72 @@ test.describe("E2E testit käyttäjän operaatioista", () => {
     await page.locator('#viitelistaus > li:last-child > a').click();
   
     //Haetaan inputit ja tarkistetaan, että tiedot ovat oikeat
-    const inputit = page.locator('.lomake input[type="text"]');
-
+/*    const inputit = page.locator('input[type="text"]');
     const tiedot = [
       "Martin, Robert",
       "Clean Code: A Handbook of Agile Software Craftsmanship",
       "Prentice Hall",
       "2008",
       "10.1234/example.doi.5678",
-    ]
-  
+    ]  
+    ]*/
 
+  });
+
+  test("Käyttäjänä voin poistaa lisäämäni viitteen", async ({ page }) => {
+    await page.goto("https://ohtuminiprojektiryhm-10.onrender.com/");
+
+    //Valitaan book tyyppinen viite ja odotetaan päivitys
+    await page.selectOption('#tyyppiValinta', { label: 'Book' });
+    await page.locator('input[type="text"]').first().waitFor({ state: 'visible' });
+    //Haetaan inputit
+    const inputit = page.locator('input[class="hakuKentta"]');
+
+   //Käydään kaikki läpi ja täytetään
+    const lkm = await inputit.count();
+    for (let i = 0; i < lkm; i++) {
+      const inputti = inputit.nth(i);
+      const name = await inputti.getAttribute("name");
+      let arvo = "";
+
+      //Testi arvot
+      switch (name) {
+        case "author":
+          arvo = "Martin, Robert";
+          console.log("author lisätty");
+          break;
+
+        case "title":
+          arvo = "Clean Code: A Handbook of Agile Software Craftsmanship";
+          break;
+
+        case "publisher":
+          arvo = "Prentice Hall";
+          break;
+
+        case "year":
+          arvo = "2008";
+          break;
+
+        case "doi":
+          arvo = "10.1234/example.doi.5678"; //Testi doi ei vie mihinkään
+          break;
+
+        default:
+          arvo = "Vakio";
+          break;
+      }
+      //Täytetään arvolla
+      await inputti.fill(arvo);
+    }
+
+    //Lisätään viite
+    await page.locator("#viitteenLisays").click();
+    //Poistetaan viite lisätyistä
+    await page.locator(".esikatseluContainer #viitelistaus button").first().click();
+    //Tarkistetaan, että viite on poistunut
+    const div = await page.locator(".esikatseluContainer").last().allTextContents();
+    expect(div).toEqual([""]);
   });
 
 
