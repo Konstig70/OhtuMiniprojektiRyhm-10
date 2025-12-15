@@ -21,7 +21,9 @@ export function muokkaaViite(esikatseluun, setViitteet, viitteet, setMuokattava,
         viitteetKopio.splice(i, 1, uusiViite);
         setViitteet(viitteetKopio);
         //Lisätään master dataan, tää tehdään aikalailla kaikkialla
-        setKaikki(viitteetKopio);
+        if (setKaikki) {
+          setKaikki(viitteetKopio);
+        }
         loytyi = true;
         break;
       }
@@ -38,7 +40,10 @@ export function muokkaaViite(esikatseluun, setViitteet, viitteet, setMuokattava,
       if (dataKopio[i].citekey === muokattava.citekey){
         dataKopio.splice(i, 1, uusiViite);
         setData(dataKopio);
-        setKaikki(dataKopio);
+        if (setKaikki) {
+          setKaikki(dataKopio);
+        }
+
         break;
       }
     }
@@ -59,7 +64,9 @@ export function muokkaaViite(esikatseluun, setViitteet, viitteet, setMuokattava,
         setViitteet(prev => [...prev, uusiViite]); 
     }
     setData(prev => [...prev, uusiViite]);
-    setKaikki(prev => [...prev, uusiViite]);
+    if (setKaikki) {
+      setKaikki(prev => [...prev, uusiViite]);
+    }
   }
 
   //12.12 Konsta: Lopuksi viedään palvelimelle muutokset:

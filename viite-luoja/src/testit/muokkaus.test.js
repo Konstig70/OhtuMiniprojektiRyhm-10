@@ -31,8 +31,7 @@ describe("muokkaaViite", () => {
       muokattava,
       setData,
       data,
-      uusiViite,
-      true
+      null, uusiViite, true
     );
 
     expect(setViitteet).toHaveBeenCalledWith([{"citekey": "abc", "type": "article", "author": "Mikko"}]);
@@ -50,6 +49,7 @@ describe("muokkaaViite", () => {
         {},
         setData,
         data,
+        null,
         uusi,
         true
     );
@@ -68,7 +68,7 @@ describe("muokkaaViite", () => {
         () => null,
         {},
         setData,
-        data,
+        data, null,
         uusi,
         true
     );
