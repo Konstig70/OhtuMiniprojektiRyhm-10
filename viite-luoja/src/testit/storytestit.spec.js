@@ -15,7 +15,7 @@ test.describe("E2E testit käyttäjän operaatioista", () => {
     await page.selectOption('#tyyppiValinta', { label: 'Book' });
     await page.locator('input[type="text"]').first().waitFor({ state: 'visible' });
     //Haetaan inputit 
-    const inputit = page.locator('input[type="text"]');
+    const inputit = page.locator('.lomake input[type="text"]');
 
     //Käydään kaikki läpi ja täytetään
     const lkm = await inputit.count();
@@ -109,16 +109,10 @@ test.describe("E2E testit käyttäjän operaatioista", () => {
     const viitteet = page.locator("#viitelistaus > li");
 
     //Haetaan viimeinen. Varmistetaan ensin, että löytyy vähintään yksi
-    expect(await viitteet.count()).toBeGreaterThanOrEqual(0);
-    const viimeinen = viitteet.last();
-    expect(viimeinen).toBeVisible();
-    console.log(await viimeinen.allTextContents());
-    //Klikataan linkkiä 
-    const a = await viimeinen.locator('a').allTextContents();
-    console.log(a);
-
+    await page.locator('#viitelistaus > li:last-child > a').click();
+  
     //Haetaan inputit ja tarkistetaan, että tiedot ovat oikeat
-    const inputit = page.locator('input[type="text"]');
+    const inputit = page.locator('.lomake input[type="text"]');
 
     const tiedot = [
       "Martin, Robert",
@@ -127,6 +121,7 @@ test.describe("E2E testit käyttäjän operaatioista", () => {
       "2008",
       "10.1234/example.doi.5678",
     ]
+  
 
   });
 
