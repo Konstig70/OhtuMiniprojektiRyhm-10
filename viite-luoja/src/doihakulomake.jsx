@@ -30,11 +30,46 @@ export function Doihakulomake({ tallennusfunktio }) {
             if (typeof hakutulos == 'string') {
                 setDoivirhe(hakutulos);
                 return null;
-            }           
-
-            setDoi('');                           
-                             
+            }                       
+            
             tallennusfunktio(hakutulos);
+            
+            const citekey = Object.prototype.hasOwnProperty.call(hakutulos, 'citekey') ? hakutulos.citekey : null; 
+            setDoi('');
+
+            if (citekey != null) {
+                setDoivirhe(`Viite ${citekey} tallennettu.`);    
+            }    
+            else {
+                setDoivirhe('Metatiedot tallennettu.');    
+            }
+                        
+            /* en saa toimimaan viitelistan vieritystä
+            const citekey = Object.prototype.hasOwnProperty.call(hakutulos, 'citekey') ? hakutulos.citekey : null; 
+            console.log(citekey);
+            
+            // <div class="tallennetutViitteet">
+            // <ul id="viitelistaus">
+            // <li> <a>citekey</a>    
+            //const testi = document.getElementById("viitelistaus").innerHTML.replaceAll(/<br>|<\/p>/g, '\n').replaceAll(/<[^<]*>/g, '');
+            //const testi = document.getElementById('viitelistaus');
+            const testi = document.getElementsByClassName('tallennetutViitteet');
+            const linkit = testi[0].getElementsByTagName('a');
+            
+            linkit[linkit.length - 1].scrollIntoView({ behavior: "instant", block: "end" });
+                        
+            if (linkit.length > 0) {
+            
+                for (let i = 0; i < linkit.length; i++) {
+                    console.log(linkit[i].childNodes[0].textContent);
+                    if (linkit[i].childNodes[0].textContent == citekey) {
+                        console.log('löytyi linkki ' + citekey);
+                        linkit[i].scrollIntoView();
+                        break;
+                    }                    
+                }                                
+            }
+            */                     
             
         }       
                     
