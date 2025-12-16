@@ -7,7 +7,6 @@ test.describe.configure({ mode: 'serial' });
 //Ajetaan testit yhdestä "päätestistä, jotta muutokset menevät oikein"
 test.describe("E2E testit käyttäjän operaatioista", () => {
 
-  // APUFUNKTIO: Tämä hoitaa inputtien täytön ja tallennuksen jokaiselle testille
   async function alustaTestiData(page) {
     //Valitaan book tyyppinen viite ja odotetaan päivitys
     await page.selectOption('#tyyppiValinta', { label: 'Book' });
@@ -52,7 +51,6 @@ test.describe("E2E testit käyttäjän operaatioista", () => {
     //Lisätään viite esikatseluun
     await page.locator("#viitteenLisays").click();
     
-    // Odotetaan että se ilmestyy listalle ennen kuin testi jatkuu
     console.log("Alustus valmis: viite lisätty ja tallennettu");
   }
 
@@ -64,7 +62,7 @@ test.describe("E2E testit käyttäjän operaatioista", () => {
     await poistettavaRivi.locator('button').click();
 
     await expect(page.locator('.tallennetutViitteet #viitelistaus')).not.toContainText('Clean Code');
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(2000);
     console.log("Poisto varmistettu ja UI päivittynyt.");
   }
 
@@ -131,7 +129,6 @@ test.describe("E2E testit käyttäjän operaatioista", () => {
   test("Käyttäjänä voin muokata lisäämiäni viitteitä", async ({ page }) => {
     await page.goto("https://ohtuminiprojektiryhm-10.onrender.com/");
     
-    // KUTSUTAAN ALUSTUS (Täyttää inputit ja tallentaa)
     await alustaTestiData(page);
 
     //Haetaan viimeinen lisäys
@@ -180,7 +177,6 @@ test.describe("E2E testit käyttäjän operaatioista", () => {
   test("Käyttäjänä voin poistaa lisäämäni viitteen", async ({ page }) => {
     await page.goto("https://ohtuminiprojektiryhm-10.onrender.com/");
 
-    // KUTSUTAAN ALUSTUS (Täyttää inputit ja tallentaa)
     await alustaTestiData(page);
 
     //Haetaan viimeinen lisäys
@@ -193,7 +189,6 @@ test.describe("E2E testit käyttäjän operaatioista", () => {
     const div = await page.locator(".esikatseluContainer").last().allTextContents();
     expect(div).toEqual([""]);
 
-    //Lopuksi poistetaan vielä listauksesta (Tämä toimii samalla loppusiivouksena)
     const ennen = await page.locator("#viitelistaus > li").count();
     console.log(`Ennen poistoa oli ${ennen} verran li-elementtejä`);
     
