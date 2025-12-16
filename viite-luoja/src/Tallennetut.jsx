@@ -29,9 +29,9 @@ function Tallennetut({viitteet, poistaFunktio, tiedotLomakkeelle, setState, kaik
           <div className="suodatusKentat">
           <legend>Suodata: </legend>
           <label>Author
-          <input type="text" name="author" onChange={(e) => suodata(e.target.value.toLowerCase(), setState, kaikkiViitteet, "author", yearVal, setAuthVal)} /> </label>
+          <input type="text" name="author" onChange={(e) => suodata(e.target.value.trim().toLowerCase(), setState, kaikkiViitteet, "author", yearVal, setAuthVal)} /> </label>
           <label>Year 
-          <input type="text" name="year" onChange={(e) => suodata(e.target.value, setState, kaikkiViitteet, "year", authorVal, setYearVal)} /> </label>
+          <input type="text" name="year" onChange={(e) => suodata(e.target.value.trim(), setState, kaikkiViitteet, "year", authorVal, setYearVal)} /> </label>
           </div>
           <div className="tallennetutViitteet">
            <legend>Tallennetut viitteet</legend>

@@ -141,7 +141,7 @@ function App() {
       
       <div className='lomake'>
         <Lomake muokattava={muokattava} />
-        <button onClick={() => tallennaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data, setKaikki)}>Tallenna</button> 
+        <button onClick={() => tallennaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data, setKaikki)} id='viitteenTallennus'>Tallenna</button> 
         <button onClick={() => lisaaViite(setViitteet, viitteet, setMuokattava, muokattava, setData, data, setKaikki)} id='viitteenLisays'>Lisää viite</button>
         <Doihakulomake tallennusfunktio={(metadata) => muokkaaViite(false, setViitteet, viitteet, setMuokattava, muokattava, setData, data, setKaikki, metadata)}/>
         </div>
