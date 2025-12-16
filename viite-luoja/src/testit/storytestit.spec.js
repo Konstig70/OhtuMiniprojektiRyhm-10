@@ -6,7 +6,13 @@ test.describe.configure({ mode: 'serial' });
 
 //Ajetaan testit yhdestä "päätestistä, jotta muutokset menevät oikein"
 test.describe("E2E testit käyttäjän operaatioista", () => {
-  //Story: "Käyttäjänä voin tallentaa nappia painamalla muodostuneen viite tiedoston BibTex-muodossa"
+  /**
+   * Story: "Käyttäjänä voin tallentaa nappia painamalla muodostuneen viite tiedoston BibTex-muodossa"
+   * Hyväksymis kriteerit: 
+   *  - Valittaessa book-tyyppi oikea määrä ja oikean tyyppiset input tulevat sivulle.
+   *  - Inputtien täyttämmisen ja lisää viite napin painamisen jälkeen sivulle esikatselu alueeseen tulee tulla
+   *    näkyviin oikeat tiedot BibTex-muodossa
+  */
   test('Käyttäjänä voin tallentaa nappia painamalla muodostuneen viite tiedoston BibTex-muodossa', async ({ page }) => {
     //Mennään sivulle 
     await page.goto('https://ohtuminiprojektiryhm-10.onrender.com/');
@@ -15,7 +21,7 @@ test.describe("E2E testit käyttäjän operaatioista", () => {
     await page.selectOption('#tyyppiValinta', { label: 'Book' });
     await page.locator('input[type="text"]').first().waitFor({ state: 'visible' });
     //Haetaan inputit 
-    const inputit = page.locator('.lomake input[type="text"]');
+    const inputit = page.locator('.lomake .hakuKentta');
 
     //Käydään kaikki läpi ja täytetään
     const lkm = await inputit.count();
@@ -102,75 +108,63 @@ test.describe("E2E testit käyttäjän operaatioista", () => {
 
   });
 
+  /** 
+   * Story: Käyttäjänä voin muokata lisäämiäni viitteitä
+   * Hyväksymis kriteerit: 
+   *  - Lisättyä viitettä klikatessa oikeat 
+   *
+   */
   test("Käyttäjänä voin muokata lisäämiäni viitteitä", async ({ page }) => {
     await page.goto("https://ohtuminiprojektiryhm-10.onrender.com/");
     //Odotetaan, että tulee näkyviin
     await page.locator("#viitelistaus > li").first().waitFor({ state: 'visible' });
-    //Haetaan kaikki tallennetut viitteet
-    const viitteet = page.locator("#viitelistaus > li");
 
-    //Haetaan viimeinen. Varmistetaan ensin, että löytyy vähintään yksi
+    //Haetaan viimeinen lisäys mikä on tässä tapauksessa edellisessä testissä lisätty viite
     await page.locator('#viitelistaus > li:last-child > a').click();
   
-    //Haetaan inputit ja tarkistetaan, että tiedot ovat oikeat
-/*    const inputit = page.locator('input[type="text"]');
+    //Haetaan inputit
+    const inputit = page.locator('.lomake .hakuKentta');
+    const inputLkm = await inputit.count();
+  
+    //Malli tiedot 
     const tiedot = [
       "Martin, Robert",
       "Clean Code: A Handbook of Agile Software Craftsmanship",
       "Prentice Hall",
       "2008",
       "10.1234/example.doi.5678",
+      ""
     ]  
-    ]*/
+    
+    //Tarkistetaan, että tiedot ovat oikeat 
+    for (let i = 0; i < inputLkm; i++) {
+      let sisalto = await inputit.nth(i).inputValue();
+      console.log("inputin sisältö: ", sisalto);
+      expect(sisalto).toBe(tiedot[i]);
+    }
+
+    //Muutetaan authoria
+    await inputit.nth(0).fill("Matti Mallikas");
+
+    //Tallenetaan
+    await page.locator("#viitteenTallennus").click();
+    
+    //Tarkistetaan, että tallennetut tiedot ovat oikeat
+    const uusiAuthor = page.locator('#viitelistaus > li:last-child > ul > li:first-child');
+    expect(uusiAuthor).toHaveText("author: Matti Mallikas");
+    
 
   });
 
   test("Käyttäjänä voin poistaa lisäämäni viitteen", async ({ page }) => {
     await page.goto("https://ohtuminiprojektiryhm-10.onrender.com/");
 
-    //Valitaan book tyyppinen viite ja odotetaan päivitys
-    await page.selectOption('#tyyppiValinta', { label: 'Book' });
-    await page.locator('input[type="text"]').first().waitFor({ state: 'visible' });
-    //Haetaan inputit
-    const inputit = page.locator('input[class="hakuKentta"]');
+    await page.goto("https://ohtuminiprojektiryhm-10.onrender.com/");
+    //Odotetaan, että tulee näkyviin
+    await page.locator("#viitelistaus > li").first().waitFor({ state: 'visible' });
 
-   //Käydään kaikki läpi ja täytetään
-    const lkm = await inputit.count();
-    for (let i = 0; i < lkm; i++) {
-      const inputti = inputit.nth(i);
-      const name = await inputti.getAttribute("name");
-      let arvo = "";
-
-      //Testi arvot
-      switch (name) {
-        case "author":
-          arvo = "Martin, Robert";
-          console.log("author lisätty");
-          break;
-
-        case "title":
-          arvo = "Clean Code: A Handbook of Agile Software Craftsmanship";
-          break;
-
-        case "publisher":
-          arvo = "Prentice Hall";
-          break;
-
-        case "year":
-          arvo = "2008";
-          break;
-
-        case "doi":
-          arvo = "10.1234/example.doi.5678"; //Testi doi ei vie mihinkään
-          break;
-
-        default:
-          arvo = "Vakio";
-          break;
-      }
-      //Täytetään arvolla
-      await inputti.fill(arvo);
-    }
+    //Haetaan viimeinen lisäys mikä on tässä tapauksessa edellisessä testissä lisätty viite
+    await page.locator('#viitelistaus > li:last-child > a').click();
 
     //Lisätään viite
     await page.locator("#viitteenLisays").click();
@@ -179,6 +173,15 @@ test.describe("E2E testit käyttäjän operaatioista", () => {
     //Tarkistetaan, että viite on poistunut
     const div = await page.locator(".esikatseluContainer").last().allTextContents();
     expect(div).toEqual([""]);
+
+    //Lopuksi poistetaan vielä listauksesta
+    const ennen = await page.locator("#viitelistaus > li").count();
+    console.log(`Ennen poistoa oli ${ennen} verran li-elementtejä`);
+    await page.locator('#viitelistaus > li:last-child > button').click();
+    const jalkeen = await page.locator("#viitelistaus > li").count();
+    console.log(`poiston jälkeen oli ${jalkeen} verran li-elementtejä`);
+    expect(jalkeen).toBeLessThan(ennen);
+     
   });
 
 

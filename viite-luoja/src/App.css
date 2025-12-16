@@ -16,7 +16,7 @@ body {
 select {
   padding: 5px;
   cursor: pointer;
-  background-color: solid #222;
+  background-color: #222;
 }
 
 select:hover {
