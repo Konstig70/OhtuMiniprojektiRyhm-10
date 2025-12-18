@@ -2,6 +2,8 @@
   
 [![Node.js CI](https://github.com/Konstig70/OhtuMiniprojektiRyhm-10/actions/workflows/node.js.yml/badge.svg)](https://github.com/Konstig70/OhtuMiniprojektiRyhm-10/actions/workflows/node.js.yml)  
   
+[Loppuraportti](https://jyu-my.sharepoint.com/:w:/g/personal/mickes_jyu_fi/IQAW-oIVG62bT4gFirvSx4B1AXa997gzCiXT1adO6Hr7kdU?e=358RR4)  
+    
 [Backlog](https://docs.google.com/spreadsheets/d/1RtC81BpHEXICsb7RXLum4VLvrsglGhjhfL8DirmWFJc/edit?usp=sharing)  
   
 ### Sovelluksen verkkosivu  
