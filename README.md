@@ -2,7 +2,7 @@
   
 [![Node.js CI](https://github.com/Konstig70/OhtuMiniprojektiRyhm-10/actions/workflows/node.js.yml/badge.svg)](https://github.com/Konstig70/OhtuMiniprojektiRyhm-10/actions/workflows/node.js.yml)  
   
-[Loppuraportti](https://jyu-my.sharepoint.com/:w:/g/personal/mickes_jyu_fi/IQAW-oIVG62bT4gFirvSx4B1AXa997gzCiXT1adO6Hr7kdU?e=358RR4)  
+[Loppuraportti](https://jyu-my.sharepoint.com/:b:/g/personal/mickes_jyu_fi/IQDDqY32HCRZQoWu-5XAx781AfVpInUbDB14ulSvPjN2lhU?e=xmEhKJ)  
     
 [Backlog](https://docs.google.com/spreadsheets/d/1RtC81BpHEXICsb7RXLum4VLvrsglGhjhfL8DirmWFJc/edit?usp=sharing)  
   
